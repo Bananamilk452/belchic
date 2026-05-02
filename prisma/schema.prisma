@@ -12,6 +12,42 @@ datasource db {
   provider = "postgresql"
 }
 
+model Product {
+  id            String       @id
+  title         String
+  handle        String
+  description   String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  vendor        String
+  type          String
+  tags          String[]
+  price         Int
+  priceMin      Int
+  priceMax      Int
+  variants      Variant[]
+  images        String[]
+  featuredImage String
+  options       String[]
+  content       String
+}
+
+model Variant {
+  id            String      @id
+  title         String
+  option1       String?
+  option2       String?
+  option3       String?
+  sku           String?
+  featuredImage String?
+  name          String
+  options       String[]
+  price         Int
+
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+}
+
 model User {
   id            String    @id
   name          String
