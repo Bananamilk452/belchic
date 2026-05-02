@@ -5,6 +5,7 @@ import Providers from "./providers";
 import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
+import { GlobalHeader } from "@/components/global-header";
 
 const pretendard = localFont({
   src: "./PretendardVariable.woff2",
@@ -22,9 +23,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={cn("h-full", "antialiased", pretendard.variable, "font-sans")}>
+    <html
+      lang="ko"
+      className={cn("h-full", "antialiased", pretendard.variable, "font-sans")}
+    >
       <body className="flex min-h-full flex-col">
-        <Providers>{children}</Providers>
+        <Providers>
+          <GlobalHeader />
+          {children}
+        </Providers>
       </body>
     </html>
   );
