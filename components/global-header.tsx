@@ -106,8 +106,6 @@ function groupSubMenu(
 
   if (chunk.length > 0) result.push(chunk);
 
-  console.log("grouped result : ", result);
-
   return result;
 }
 
@@ -141,7 +139,7 @@ export function GlobalHeader() {
 
   return (
     <div className="w-full flex justify-center items-center bg-white border-b border-border">
-      <div className="flex gap-8 justify-between items-center py-5 px-4 md:px-12 w-full max-w-7xl">
+      <div className="flex gap-6 justify-between items-center py-5 px-4 md:px-12 w-full max-w-7xl">
         <div className="flex items-center justify-center gap-2">
           <Sheet>
             <SheetTrigger asChild>
@@ -151,7 +149,11 @@ export function GlobalHeader() {
             </SheetTrigger>
             <SheetContent side="left" showCloseButton={false}>
               <SheetHeader>
-                <SheetTitle>Belchic</SheetTitle>
+                <SheetTitle asChild>
+                  <div className="w-[100px]">
+                    <img src="/images/belchic_logo.png" alt="belchic logo" />
+                  </div>
+                </SheetTitle>
                 <SheetDescription />
               </SheetHeader>
               <div className="flex-1 flex flex-col">
@@ -173,7 +175,9 @@ export function GlobalHeader() {
               </div>
             </SheetContent>
           </Sheet>
-          <span className="text-lg">Belchic</span>
+          <div className="w-[100px]">
+            <img src="/images/belchic_logo.png" alt="belchic logo" />
+          </div>
         </div>
         <div className="flex-1 hidden md:flex flex-wrap">
           {NAV_MENU.map((item) =>
