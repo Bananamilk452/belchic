@@ -24,7 +24,7 @@ export function ProductCard({ product }: ProductCardProps) {
         <LikeButton />
       </Link>
       <div className="py-[17px]">
-        <Link href="#" className="text-[13px] leading-0.5 hover:underline">
+        <Link href="#" className="text-[14px] leading-0.5 hover:underline">
           {product.title}
         </Link>
         <p className="mt-1 text-base">
