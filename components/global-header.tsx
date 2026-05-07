@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  ChevronDownIcon,
-  HeartIcon,
-  MenuIcon,
-  SearchIcon,
-  ShoppingBagIcon,
-  UserIcon,
-} from "lucide-react";
-import { Button } from "./ui/button";
 import Link from "next/link";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   Sheet,
   SheetContent,
@@ -18,8 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,9 +23,15 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "@/resources/icons/ArrowRight";
 import { ArrowLeftIcon } from "@/resources/icons/ArrowLeft";
+import { MenuIcon } from "@/resources/icons/Menu";
+import { SearchIcon } from "@/resources/icons/Search";
+import { AccountIcon } from "@/resources/icons/Account";
+import { WishlistIcon } from "@/resources/icons/Wishlist";
+import { CartIcon } from "@/resources/icons/Cart";
+import { ChevronDownIcon } from "lucide-react";
 
 type NavMenu =
   | {
@@ -269,13 +267,13 @@ export function GlobalHeader() {
             <SearchIcon className="size-5" />
           </Button>
           <Button variant="ghost" className="hidden md:flex" size="icon-lg">
-            <UserIcon className="size-5" />
+            <AccountIcon className="size-5" />
           </Button>
           <Button variant="ghost" size="icon-lg">
-            <HeartIcon className="size-5" />
+            <WishlistIcon className="size-5" />
           </Button>
           <Button variant="ghost" size="icon-lg">
-            <ShoppingBagIcon className="size-5" />
+            <CartIcon className="size-5" />
           </Button>
         </div>
       </div>
