@@ -31,3 +31,18 @@ export async function getProducts(params: GetProductsParams): Promise<GetProduct
     },
   };
 }
+
+export async function getProductByHandle(handle: string) {
+  const product = await prisma.product.findFirst({
+    where: { handle },
+    include: { variants: true },
+  });
+
+  if (!product) {
+    throw new Error("Product not found");
+  }
+
+  return {
+    product,
+  };
+}

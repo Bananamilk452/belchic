@@ -16,3 +16,11 @@ export interface GetProductsResult {
     hasPrev: boolean;
   };
 }
+
+export interface GetProductByHandleParams {
+  handle: string;
+}
+
+export interface GetProductByHandleResult {
+  product: Product & { variants: Variant[] };
+}
