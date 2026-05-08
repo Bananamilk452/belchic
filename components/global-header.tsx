@@ -1,16 +1,10 @@
 "use client";
 
+import { ChevronDownIcon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "./ui/sheet";
+import { useState } from "react";
+
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -23,15 +17,22 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 import { cn } from "@/lib/utils";
-import { ArrowRightIcon } from "@/resources/icons/ArrowRight";
+import { AccountIcon } from "@/resources/icons/Account";
 import { ArrowLeftIcon } from "@/resources/icons/ArrowLeft";
+import { ArrowRightIcon } from "@/resources/icons/ArrowRight";
+import { CartIcon } from "@/resources/icons/Cart";
 import { MenuIcon } from "@/resources/icons/Menu";
 import { SearchIcon } from "@/resources/icons/Search";
-import { AccountIcon } from "@/resources/icons/Account";
 import { WishlistIcon } from "@/resources/icons/Wishlist";
-import { CartIcon } from "@/resources/icons/Cart";
-import { ChevronDownIcon } from "lucide-react";
 
 type NavMenu =
   | {
@@ -85,9 +86,7 @@ const NAV_MENU: Array<NavMenu> = [
  * @param submenu 서브메뉴 데이터
  * @returns Array가 반환되면 Group으로 처리하고, object가 반환되면 subMenu로 처리하기.
  */
-function groupSubMenu(
-  submenu: Array<NavMenu>,
-): Array<Array<NavMenu> | NavMenu> {
+function groupSubMenu(submenu: Array<NavMenu>): Array<Array<NavMenu> | NavMenu> {
   const result = [];
 
   let chunk: Array<NavMenu> = [];
@@ -119,9 +118,7 @@ function DesktopNavMenu({ menus }: { menus: Array<NavMenu> }) {
           {subItem.map(
             (submenuItem) =>
               "path" in submenuItem && (
-                <DropdownMenuItem key={submenuItem.label}>
-                  {submenuItem.label}
-                </DropdownMenuItem>
+                <DropdownMenuItem key={submenuItem.label}>{submenuItem.label}</DropdownMenuItem>
               ),
           )}
         </DropdownMenuGroup>
@@ -138,13 +135,13 @@ function DesktopNavMenu({ menus }: { menus: Array<NavMenu> }) {
     );
 
   return (
-    <div className="flex-1 hidden md:flex flex-wrap">
+    <div className="hidden flex-1 flex-wrap md:flex">
       {menus.map((item, idx) =>
         "path" in item ? (
-          <Link key={idx} className="p-2 group" href={item.path}>
+          <Link key={idx} className="group p-2" href={item.path}>
             <span
               className={cn(
-                "group-hover:border-b border-border",
+                "border-border group-hover:border-b",
                 pathname === item.path && "border-b group-hover:border-black",
               )}
             >
@@ -154,10 +151,8 @@ function DesktopNavMenu({ menus }: { menus: Array<NavMenu> }) {
         ) : (
           <DropdownMenu key={item.label}>
             <DropdownMenuTrigger asChild>
-              <div className="p-2 flex items-center cursor-pointer group">
-                <span className={cn("group-hover:border-b border-border")}>
-                  {item.label}
-                </span>
+              <div className="group flex cursor-pointer items-center p-2">
+                <span className={cn("border-border group-hover:border-b")}>{item.label}</span>
                 <ChevronDownIcon strokeWidth={1} className="size-5" />
               </div>
             </DropdownMenuTrigger>
@@ -204,10 +199,10 @@ function MobileNavSheet({
           </SheetTitle>
           <SheetDescription />
         </SheetHeader>
-        <div className="flex flex-col h-full w-full overflow-y-auto">
+        <div className="flex h-full w-full flex-col overflow-y-auto">
           {subtitle && (
             <button
-              className="py-3 px-4.5 flex items-center gap-2"
+              className="flex items-center gap-2 px-4.5 py-3"
               onClick={() => {
                 setSheetOpen(false);
               }}
@@ -220,10 +215,7 @@ function MobileNavSheet({
             "path" in item ? (
               <Link
                 key={idx}
-                className={cn(
-                  "py-2 px-6",
-                  pathname === item.path && "bg-secondary",
-                )}
+                className={cn("px-6 py-2", pathname === item.path && "bg-secondary")}
                 href={item.path}
                 onClick={() => {
                   setSheetOpen(false);
@@ -237,7 +229,7 @@ function MobileNavSheet({
                 menus={item.submenu}
                 subtitle={item.label}
                 Trigger={() => (
-                  <SheetTrigger className="py-2 px-6 w-full flex justify-between items-center">
+                  <SheetTrigger className="flex w-full items-center justify-between px-6 py-2">
                     <span className="text-lg">{item.label}</span>
                     <ArrowRightIcon className="size-4" />
                   </SheetTrigger>
@@ -253,8 +245,8 @@ function MobileNavSheet({
 
 export function GlobalHeader() {
   return (
-    <div className="w-full flex justify-center items-center bg-white border-b border-border">
-      <div className="flex gap-6 justify-between items-center py-5 px-4 md:px-12 w-full max-w-7xl">
+    <div className="flex w-full items-center justify-center border-b border-border bg-white">
+      <div className="flex w-full max-w-7xl items-center justify-between gap-6 px-4 py-5 md:px-12">
         <div className="flex items-center justify-center gap-2">
           <MobileNavSheet menus={NAV_MENU} />
           <Link href="/" className="w-[100px]">

@@ -3,10 +3,10 @@ import localFont from "next/font/local";
 
 import "./globals.css";
 import Providers from "./providers";
+import { GlobalHeader } from "@/components/global-header";
 import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
-import { GlobalHeader } from "@/components/global-header";
 
 const pretendard = localFont({
   src: "./PretendardVariable.woff2",

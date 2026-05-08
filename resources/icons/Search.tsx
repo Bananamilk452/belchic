@@ -1,16 +1,11 @@
-import { cn } from "@/lib/utils";
 import { ComponentPropsWithoutRef } from "react";
 
-export function SearchIcon({
-  className,
-  ...props
-}: ComponentPropsWithoutRef<"svg">) {
+import { cn } from "@/lib/utils";
+
+export function SearchIcon({ className, ...props }: ComponentPropsWithoutRef<"svg">) {
   return (
     <svg
-      className={cn(
-        "icon icon-search flex justify-center items-center",
-        className,
-      )}
+      className={cn("icon icon-search flex items-center justify-center", className)}
       aria-hidden="true"
       focusable="false"
       viewBox="0 0 18 19"
