@@ -35,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </Link>
         <p className="mt-1 text-base">
           {(product.price / 100).toLocaleString("ko-KR", { style: "currency", currency: "KRW" })}
-          부터
+          {product.variants.length > 1 && "부터"}
         </p>
       </div>
     </div>
