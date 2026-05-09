@@ -53,6 +53,7 @@ export function ProductDetail({ handle }: ProductDetailProps) {
 export function ProductImageSlider() {
   const { product, selectedImageIndex, setSelectedImageIndex } = useProduct();
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const thumbContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (thumbRefs.current[selectedImageIndex]) {
@@ -64,6 +65,19 @@ export function ProductImageSlider() {
     }
   }, [selectedImageIndex]);
 
+  const handleScroll = (direction: "left" | "right") => {
+    if (!thumbContainerRef.current) return;
+
+    const container = thumbContainerRef.current;
+    const scrollAmount = container.clientWidth;
+
+    if (direction === "left") {
+      container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    } else {
+      container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="flex flex-col">
       <img
@@ -73,11 +87,14 @@ export function ProductImageSlider() {
       />
 
       <div className="flex py-6">
-        <button className="cursor-pointer p-4">
+        <button className="cursor-pointer p-4" onClick={() => handleScroll("left")}>
           <ChevronLeftIcon className="size-5 text-gray-600" />
         </button>
 
-        <div className="no-scrollbar flex min-w-0 snap-x snap-proximity gap-4 overflow-x-auto">
+        <div
+          ref={thumbContainerRef}
+          className="no-scrollbar flex min-w-0 snap-x snap-proximity gap-4 overflow-x-auto"
+        >
           {product.images.map((image, index) => (
             <button
               key={index}
@@ -99,7 +116,7 @@ export function ProductImageSlider() {
           ))}
         </div>
 
-        <button className="cursor-pointer p-4">
+        <button className="cursor-pointer p-4" onClick={() => handleScroll("right")}>
           <ChevronRightIcon className="size-5 text-gray-600" />
         </button>
       </div>
