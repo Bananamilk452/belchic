@@ -1,6 +1,10 @@
 import { prisma } from "../prisma";
 
-import type { GetProductsParams, GetProductsResult } from "../models/product.model";
+import type {
+  GetProductsParams,
+  GetProductsResult,
+  GetRelatedProductsByHandleParams,
+} from "../models/product.model";
 
 export async function getProducts(params: GetProductsParams): Promise<GetProductsResult> {
   const page = params.page ?? 1;
@@ -44,5 +48,31 @@ export async function getProductByHandle(handle: string) {
 
   return {
     product,
+  };
+}
+
+export async function getRelatedProductsByHandle(params: GetRelatedProductsByHandleParams) {
+  const { handle, limit = 10 } = params;
+
+  const product = await prisma.product.findFirst({
+    where: { handle },
+    select: { id: true, type: true, tags: true },
+  });
+
+  if (!product) {
+    throw new Error("Product not found");
+  }
+
+  const relatedProducts = await prisma.product.findMany({
+    where: {
+      id: { not: product.id },
+      OR: [{ type: product.type }, { tags: { hasSome: product.tags } }],
+    },
+    take: limit,
+    include: { variants: true },
+  });
+
+  return {
+    products: relatedProducts,
   };
 }

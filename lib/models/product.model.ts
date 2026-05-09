@@ -24,3 +24,12 @@ export interface GetProductByHandleParams {
 export interface GetProductByHandleResult {
   product: Product & { variants: Variant[] };
 }
+
+export interface GetRelatedProductsByHandleParams {
+  handle: string;
+  limit?: number;
+}
+
+export interface GetRelatedProductsByHandleResult {
+  products: (Product & { variants: Variant[] })[];
+}
