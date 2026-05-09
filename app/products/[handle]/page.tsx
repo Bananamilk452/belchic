@@ -4,14 +4,20 @@ import { HydrationBoundary } from "@tanstack/react-query";
 
 import { ProductDetail } from "@/components/product/ProductDetail";
 import { getQueryClient } from "@/hooks/getQueryClient";
-import { productByHandleQueryOptions } from "@/lib/queries/product.query";
+import {
+  productByHandleQueryOptions,
+  relatedProductsByHandleQueryOptions,
+} from "@/lib/queries/product.query";
 
 export default async function ProductPage({ params }: { params: Promise<{ handle: string }> }) {
   const { handle } = await params;
 
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(productByHandleQueryOptions(handle));
+  await Promise.all([
+    queryClient.prefetchQuery(productByHandleQueryOptions(handle)),
+    queryClient.prefetchQuery(relatedProductsByHandleQueryOptions(handle)),
+  ]);
 
   return (
     <div>
