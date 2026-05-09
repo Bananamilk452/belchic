@@ -125,20 +125,14 @@ export function ProductImageSlider() {
 }
 
 export function ProductInfo() {
-  const { product, quantity, setQuantity } = useProduct();
+  const { product, quantity, setQuantity, selectedVariant } = useProduct();
 
   return (
     <div className="flex flex-col items-start">
       <h1 className="mb-4 text-2xl font-bold">{product.title}</h1>
-      <p className="mb-4 text-lg">
-        {(product.price / 100).toLocaleString("ko-KR", {
-          style: "currency",
-          currency: "KRW",
-        })}
-      </p>
       <ProductVariant />
       <p className="py-4 text-xl font-light">
-        {(product.price / 100).toLocaleString("ko-KR", {
+        {(selectedVariant.price / 100).toLocaleString("ko-KR", {
           style: "currency",
           currency: "KRW",
         })}
