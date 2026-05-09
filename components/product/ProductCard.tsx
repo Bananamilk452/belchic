@@ -10,7 +10,10 @@ type ProductCardProps = {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="w-full">
-      <Link href="#" className="group relative block w-full overflow-hidden">
+      <Link
+        href={`/products/${product.handle}`}
+        className="group relative block w-full overflow-hidden"
+      >
         <img
           className="h-full w-full max-w-full object-cover opacity-100 transition-opacity duration-300 group-hover:opacity-50"
           src={product.featuredImage}
@@ -24,12 +27,15 @@ export function ProductCard({ product }: ProductCardProps) {
         <LikeButton />
       </Link>
       <div className="py-[17px]">
-        <Link href="#" className="text-[14px] leading-0.5 hover:underline">
+        <Link
+          href={`/products/${product.handle}`}
+          className="text-[14px] leading-0.5 hover:underline"
+        >
           {product.title}
         </Link>
         <p className="mt-1 text-base">
           {(product.price / 100).toLocaleString("ko-KR", { style: "currency", currency: "KRW" })}
-          부터
+          {product.variants.length > 1 && "부터"}
         </p>
       </div>
     </div>
