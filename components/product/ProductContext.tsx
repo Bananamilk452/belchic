@@ -27,7 +27,9 @@ export function ProductProvider({
   children: React.ReactNode;
   product: GetProductByHandleResult["product"];
 }) {
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(
+    product.images.findIndex((img) => img === product.variants[0].featuredImage) ?? 0,
+  );
   const [selectedVariantIndex, setSelectedVariantIndex] = useState(0);
   const selectedImage = product.images[selectedImageIndex];
   const selectedVariant = product.variants[selectedVariantIndex];
