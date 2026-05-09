@@ -1,6 +1,10 @@
 "use server";
 
-import { getProductByHandle, getProducts, getRelatedProductsByHandle } from "../services/product.service";
+import {
+  getProductByHandle,
+  getProducts,
+  getRelatedProductsByHandle,
+} from "../services/product.service";
 
 import type { GetProductsParams, GetRelatedProductsByHandleParams } from "../models/product.model";
 
