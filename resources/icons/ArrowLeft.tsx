@@ -1,15 +1,10 @@
-import { cn } from "@/lib/utils";
 import { ComponentPropsWithoutRef } from "react";
 
-export function ArrowLeftIcon({
-  className,
-  ...props
-}: ComponentPropsWithoutRef<"div">) {
+import { cn } from "@/lib/utils";
+
+export function ArrowLeftIcon({ className, ...props }: ComponentPropsWithoutRef<"div">) {
   return (
-    <div
-      className={cn("flex justify-center items-center rotate-180", className)}
-      {...props}
-    >
+    <div className={cn("flex rotate-180 items-center justify-center", className)} {...props}>
       <svg
         viewBox="0 0 14 10"
         fill="none"

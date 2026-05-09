@@ -1,10 +1,8 @@
-import { cn } from "@/lib/utils";
 import { ComponentPropsWithoutRef } from "react";
 
-export function MenuIcon({
-  className,
-  ...props
-}: ComponentPropsWithoutRef<"svg">) {
+import { cn } from "@/lib/utils";
+
+export function MenuIcon({ className, ...props }: ComponentPropsWithoutRef<"svg">) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,10 +10,7 @@ export function MenuIcon({
       focusable="false"
       fill="none"
       viewBox="0 0 18 16"
-      className={cn(
-        "icon icon-hamburger flex justify-center items-center",
-        className,
-      )}
+      className={cn("icon icon-hamburger flex items-center justify-center", className)}
       {...props}
     >
       <path
