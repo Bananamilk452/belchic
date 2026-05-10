@@ -2,17 +2,12 @@ import { Outfit } from "next/font/google";
 import localFont from "next/font/local";
 
 import "./globals.css";
-import z from "zod";
-import { ko } from "zod/locales";
-
 import Providers from "./providers";
 import { GlobalHeader } from "@/components/global-header";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
-
-z.config(ko());
 
 const pretendard = localFont({
   src: "./PretendardVariable.woff2",

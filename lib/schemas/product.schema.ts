@@ -1,4 +1,9 @@
 import { z } from "zod";
+import { ko } from "zod/locales";
+
+import { ERROR_MESSAGES } from "../error-messages";
+
+z.config(ko());
 
 export const GetProductsParamsSchema = z.object({
   page: z.number().optional(),
