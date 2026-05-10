@@ -9,6 +9,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 # belchic.shop Clone (Portfolio Demo)
 
 ## Tech Stack
+
 - **Framework**: Next.js 16 (App Router), React 19, TypeScript
 - **Database**: PostgreSQL with Prisma (custom adapter: @prisma/adapter-pg)
 - **Auth**: better-auth (email/password)
@@ -17,6 +18,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - **Payment**: Stripe (test mode) - to be implemented
 
 ## Key Commands
+
 ```bash
 pnpm dev              # Start dev server
 pnpm build            # Build for production
@@ -30,7 +32,9 @@ pnpm prisma migrate   # Run database migrations
 **Order when changing code**: `format` → `typecheck` → `lint`
 
 ## Architecture Pattern (Layered)
+
 When adding new features, follow this pattern:
+
 1. `lib/schemas/` → Zod schemas (use Korean locale: `z.config(ko())`)
 2. `lib/models/` → TypeScript types (infer from schemas)
 3. `lib/services/` → Business logic + Prisma queries
@@ -39,11 +43,13 @@ When adding new features, follow this pattern:
 6. `components/` → UI components
 
 ## Data Fetching Pattern
+
 - **Server**: Use `getQueryClient()` from `hooks/getQueryClient.ts`, prefetch queries, pass to `<HydrationBoundary>`
 - **Client**: Use `<SuspenseQuery>` from `@suspensive/react-query` with query options
 - **Query Options**: Always use query options from `lib/queries/` (e.g., `productsQueryOptions()`)
 
 ## Prisma Configuration
+
 - Custom adapter: `@prisma/adapter-pg` (not default)
 - Client output: `lib/generated/prisma` (custom path)
 - Schema location: `prisma/schema.prisma`
@@ -51,12 +57,14 @@ When adding new features, follow this pattern:
 - After schema changes: `pnpm prisma generate` + `pnpm prisma migrate`
 
 ## Authentication
+
 - Server: `lib/auth.ts` → `auth` instance with Prisma adapter
 - Client: `lib/auth-client.ts` → `authClient` for React hooks
 - API route: `app/api/auth/[...all]/route.ts` → `toNextJsHandler(auth)`
 - Email/password enabled by default
 
 ## Styling & UI
+
 - Tailwind CSS v4 with CSS imports (no tailwind.config.js)
 - OKLCH color space
 - shadcn/ui style: `radix-luma`, baseColor: `neutral`
@@ -65,12 +73,14 @@ When adding new features, follow this pattern:
 - CN helper: `lib/utils.ts` (`cn(...inputs)`)
 
 ## Code Quality
+
 - **Formatter**: oxfmt (not Prettier) - auto-formats imports and Tailwind classes
 - **ESLint**: next.config (typescript + core-web-vitals) with custom ignores
 - **CI**: Auto-format workflow runs on push to main/develop
 - **Comments**: Only add comments for complex logic or unavoidable tricks (Korean only)
 
 ## File Structure
+
 - `app/` - Next.js App Router pages
 - `components/ui/` - shadcn/ui components
 - `components/` - Feature components (e.g., `product/ProductCard.tsx`)
@@ -84,4 +94,5 @@ When adding new features, follow this pattern:
 - `resources/icons/` - Custom icons
 
 ## TypeScript Aliases
+
 `@/*` maps to project root (configured in tsconfig.json)
