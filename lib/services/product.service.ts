@@ -1,3 +1,4 @@
+import { ERROR_MESSAGES } from "../error-messages";
 import { prisma } from "../prisma";
 
 import type {
@@ -43,7 +44,7 @@ export async function getProductByHandle(handle: string) {
   });
 
   if (!product) {
-    throw new Error("상품을 찾을 수 없습니다");
+    throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
   }
 
   return {
@@ -60,7 +61,7 @@ export async function getRelatedProductsByHandle(params: GetRelatedProductsByHan
   });
 
   if (!product) {
-    throw new Error("상품을 찾을 수 없습니다");
+    throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
   }
 
   const relatedProducts = await prisma.product.findMany({

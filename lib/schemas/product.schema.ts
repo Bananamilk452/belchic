@@ -11,10 +11,10 @@ export const GetProductsParamsSchema = z.object({
 });
 
 export const GetProductByHandleParamsSchema = z.object({
-  handle: z.string().min(1, "Handle is required"),
+  handle: z.string().min(1, ERROR_MESSAGES.HANDLE_REQUIRED),
 });
 
 export const GetRelatedProductsByHandleParamsSchema = z.object({
-  handle: z.string().min(1, "Handle is required"),
+  handle: z.string().min(1, ERROR_MESSAGES.HANDLE_REQUIRED),
   limit: z.number().optional(),
 });
