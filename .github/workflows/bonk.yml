@@ -31,7 +31,7 @@ jobs:
         env:
           ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
         with:
-          model: "GLM-5.1"
+          model: "zai-coding-plan/glm-5.1"
           mentions: "/bonk,@ask-bonk"
           permissions: write
           # opencode_version: "1.2.16"  # Pin to a specific OpenCode version (default: latest)
