@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers";
 import { GlobalHeader } from "@/components/global-header";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Providers>
           <GlobalHeader />
           {children}
+          <Toaster />
         </Providers>
       </body>
     </html>
