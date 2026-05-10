@@ -29,9 +29,9 @@ jobs:
       - name: Run Bonk
         uses: ask-bonk/ask-bonk/github@main
         env:
-          ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         with:
-          model: "zai-coding-plan/glm-5.1"
+          model: "deepseek/deepseek-v4-pro"
           mentions: "/bonk,@ask-bonk"
           permissions: write
           # opencode_version: "1.2.16"  # Pin to a specific OpenCode version (default: latest)
