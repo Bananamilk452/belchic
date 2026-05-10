@@ -43,7 +43,7 @@ export async function getProductByHandle(handle: string) {
   });
 
   if (!product) {
-    throw new Error("Product not found");
+    throw new Error("상품을 찾을 수 없습니다");
   }
 
   return {
@@ -60,7 +60,7 @@ export async function getRelatedProductsByHandle(params: GetRelatedProductsByHan
   });
 
   if (!product) {
-    throw new Error("Product not found");
+    throw new Error("상품을 찾을 수 없습니다");
   }
 
   const relatedProducts = await prisma.product.findMany({
