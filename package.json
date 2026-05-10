@@ -9,7 +9,8 @@
     "lint": "eslint",
     "format": "oxfmt",
     "prisma": "prisma",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
