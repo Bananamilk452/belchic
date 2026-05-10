@@ -1,11 +1,14 @@
 import { Product, Variant } from "../generated/prisma/client";
+import {
+  GetProductsParamsSchema,
+  GetProductByHandleParamsSchema,
+  GetRelatedProductsByHandleParamsSchema,
+} from "../schemas/product.schema";
 
-export interface GetProductsParams {
-  page?: number;
-  limit?: number;
-}
+import type { z } from "zod";
 
-export interface GetProductsResult {
+export type GetProductsParams = z.infer<typeof GetProductsParamsSchema>;
+export type GetProductsResult = {
   products: (Product & { variants: Variant[] })[];
   pagination: {
     page: number;
@@ -15,21 +18,14 @@ export interface GetProductsResult {
     hasNext: boolean;
     hasPrev: boolean;
   };
-}
-
-export interface GetProductByHandleParams {
-  handle: string;
-}
-
-export interface GetProductByHandleResult {
+};
+export type GetProductByHandleParams = z.infer<typeof GetProductByHandleParamsSchema>;
+export type GetProductByHandleResult = {
   product: Product & { variants: Variant[] };
-}
-
-export interface GetRelatedProductsByHandleParams {
-  handle: string;
-  limit?: number;
-}
-
-export interface GetRelatedProductsByHandleResult {
+};
+export type GetRelatedProductsByHandleParams = z.infer<
+  typeof GetRelatedProductsByHandleParamsSchema
+>;
+export type GetRelatedProductsByHandleResult = {
   products: (Product & { variants: Variant[] })[];
-}
+};
