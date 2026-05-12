@@ -1,4 +1,3 @@
-import { Suspense } from "@suspensive/react";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 
 import { CollectionProductList } from "@/components/collection/CollectionProductList";
@@ -18,14 +17,12 @@ export default async function CollectionPage({
 
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(productsQueryOptions({ page, limit: 32 }));
+  await queryClient.prefetchQuery(productsQueryOptions({ page, limit: 12 }));
 
   return (
     <div>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <CollectionProductList collection={collection} />
-        </Suspense>
+        <CollectionProductList collection={collection} />
       </HydrationBoundary>
     </div>
   );
