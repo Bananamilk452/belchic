@@ -5,9 +5,19 @@ import { ERROR_MESSAGES } from "../error-messages";
 
 z.config(ko());
 
+export const ProductSortSchema = z.enum([
+  "price_asc",
+  "price_desc",
+  "name_asc",
+  "name_desc",
+  "date_asc",
+  "date_desc",
+]);
+
 export const GetProductsParamsSchema = z.object({
   page: z.number().optional(),
   limit: z.number().optional(),
+  sort: ProductSortSchema.optional(),
 });
 
 export const GetProductByHandleParamsSchema = z.object({

@@ -5,18 +5,29 @@ import type {
   GetProductsParams,
   GetProductsResult,
   GetRelatedProductsByHandleParams,
+  ProductSort,
 } from "../models/product.model";
+
+const sortOrderMap = {
+  price_asc: { price: "asc" },
+  price_desc: { price: "desc" },
+  name_asc: { title: "asc" },
+  name_desc: { title: "desc" },
+  date_asc: { createdAt: "asc" },
+  date_desc: { createdAt: "desc" },
+} as const satisfies Record<ProductSort, Record<string, "asc" | "desc">>;
 
 export async function getProducts(params: GetProductsParams): Promise<GetProductsResult> {
   const page = params.page ?? 1;
   const limit = params.limit ?? 10;
   const skip = (page - 1) * limit;
+  const orderBy = params.sort ? sortOrderMap[params.sort] : { createdAt: "desc" as const };
 
   const [products, total] = await Promise.all([
     prisma.product.findMany({
       skip,
       take: limit,
-      orderBy: { createdAt: "desc" },
+      orderBy,
       include: { variants: true },
     }),
     prisma.product.count(),

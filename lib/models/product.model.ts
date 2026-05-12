@@ -3,10 +3,12 @@ import {
   GetProductsParamsSchema,
   GetProductByHandleParamsSchema,
   GetRelatedProductsByHandleParamsSchema,
+  ProductSortSchema,
 } from "../schemas/product.schema";
 
 import type { z } from "zod";
 
+export type ProductSort = z.infer<typeof ProductSortSchema>;
 export type GetProductsParams = z.infer<typeof GetProductsParamsSchema>;
 export type GetProductsResult = {
   products: (Product & { variants: Variant[] })[];
