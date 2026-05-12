@@ -52,7 +52,7 @@ describe("Cart Service", () => {
     it("userId로 카트를 가져온다", async () => {
       mockPrisma.cart.findMany.mockResolvedValue(mockCartItems);
 
-      const result = await getCart(undefined, USER_ID);
+      await getCart(undefined, USER_ID);
 
       expect(mockPrisma.cart.findMany).toHaveBeenCalledWith({
         where: { userId: USER_ID },
@@ -133,7 +133,7 @@ describe("Cart Service", () => {
       const updatedItem = createMockCartItem({ quantity: 5 });
       mockPrisma.cart.update.mockResolvedValue(updatedItem);
 
-      const result = await addToCart("variant-1", 3, SESSION_ID);
+      await addToCart("variant-1", 3, SESSION_ID);
 
       expect(mockPrisma.cart.update).toHaveBeenCalledWith({
         where: { id: existingItem.id },

@@ -1,8 +1,6 @@
 import { z } from "zod";
 import { ko } from "zod/locales";
 
-import { ERROR_MESSAGES } from "../error-messages";
-
 z.config(ko());
 
 export const getCartSchema = z.object({

@@ -3,24 +3,27 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMockCartItem, mockCartItems, SESSION_ID, USER_ID } from "../../cart/mockData";
 import { createMockCookieStore } from "../../helpers/mockCookies";
 
+vi.mock("@/lib/services/cart.service", () => ({
+  getCart: vi.fn(),
+  addToCart: vi.fn(),
+  updateCartItem: vi.fn(),
+  removeFromCart: vi.fn(),
+  mergeGuestCart: vi.fn(),
+}));
+
+vi.mock("@/lib/auth", () => ({
+  auth: {
+    api: {
+      getSession: vi.fn().mockResolvedValue(null),
+    },
+  },
+}));
+
 const mockCookieStore = createMockCookieStore(SESSION_ID);
 
 vi.mock("next/headers", () => ({
   cookies: vi.fn(() => Promise.resolve(mockCookieStore)),
-}));
-
-const mockGetCart = vi.fn();
-const mockAddToCart = vi.fn();
-const mockUpdateCartItem = vi.fn();
-const mockRemoveFromCart = vi.fn();
-const mockMergeGuestCart = vi.fn();
-
-vi.mock("@/lib/services/cart.service", () => ({
-  getCart: mockGetCart,
-  addToCart: mockAddToCart,
-  updateCartItem: mockUpdateCartItem,
-  removeFromCart: mockRemoveFromCart,
-  mergeGuestCart: mockMergeGuestCart,
+  headers: vi.fn(() => Promise.resolve(new Headers())),
 }));
 
 import {
@@ -31,6 +34,13 @@ import {
   mergeGuestCartToUserAction,
   clearCartSessionIdAction,
 } from "@/lib/actions/cart.action";
+import * as cartService from "@/lib/services/cart.service";
+
+const mockGetCart = vi.mocked(cartService.getCart);
+const mockAddToCart = vi.mocked(cartService.addToCart);
+const mockUpdateCartItem = vi.mocked(cartService.updateCartItem);
+const mockRemoveFromCart = vi.mocked(cartService.removeFromCart);
+const mockMergeGuestCart = vi.mocked(cartService.mergeGuestCart);
 
 describe("Cart Actions", () => {
   beforeEach(() => {

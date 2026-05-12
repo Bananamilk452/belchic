@@ -85,7 +85,7 @@ export function ProductImageSlider() {
     <div className="flex flex-col">
       <img
         src={product.images[selectedImageIndex]}
-        alt={`Product image ${selectedImageIndex + 1}`}
+        alt={product.title}
         className="h-auto w-full object-cover"
       />
 
@@ -108,13 +108,9 @@ export function ProductImageSlider() {
                 "size-16 shrink-0 cursor-pointer snap-start",
                 index === selectedImageIndex ? "border-2 border-black" : "",
               )}
+              onClick={() => setSelectedImageIndex(index)}
             >
-              <img
-                src={image}
-                alt={`Thumbnail ${index + 1}`}
-                className="size-full object-cover"
-                onClick={() => setSelectedImageIndex(index)}
-              />
+              <img src={image} alt={`Thumbnail ${index + 1}`} className="size-full object-cover" />
             </button>
           ))}
         </div>
