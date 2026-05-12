@@ -64,13 +64,21 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
     parseAsStringLiteral(SORT_VALUES).withDefault(defaultOptions.sort ?? "date_desc"),
   );
 
-  const { data, isPending } = useQuery(productsQueryOptions({ ...defaultOptions, page, sort }));
+  const { data, isPending, isError } = useQuery(productsQueryOptions({ ...defaultOptions, page, sort }));
 
   if (isPending) {
     // TODO: 로딩 개선
     return (
       <div className="w-full p-4">
         <span>Loading...</span>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="w-full p-4">
+        <span>상품을 불러오는 중 오류가 발생했습니다.</span>
       </div>
     );
   }
