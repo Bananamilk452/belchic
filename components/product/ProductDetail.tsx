@@ -1,7 +1,9 @@
 "use client";
 
 import { SuspenseQuery } from "@suspensive/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 import { Button } from "../ui/button";
@@ -9,11 +11,12 @@ import { Pill } from "../ui/pill";
 import { Quantity } from "../ui/quantity";
 import { ProductCard } from "./ProductCard";
 import { ProductProvider, useProduct } from "./ProductContext";
+import { addToCartAction } from "@/lib/actions/cart.action";
 import {
   productByHandleQueryOptions,
   relatedProductsByHandleQueryOptions,
 } from "@/lib/queries/product.query";
-import { cn } from "@/lib/utils";
+import { cn, parsePrice } from "@/lib/utils";
 
 type ProductDetailProps = {
   handle: string;
@@ -126,17 +129,25 @@ export function ProductImageSlider() {
 
 export function ProductInfo() {
   const { product, quantity, setQuantity, selectedVariant } = useProduct();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  const addToCartMutation = useMutation({
+    mutationFn: async () => {
+      const result = await addToCartAction(selectedVariant.id, quantity);
+      return result;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      router.push("/cart");
+    },
+  });
 
   return (
     <div className="flex flex-col items-start">
       <h1 className="mb-4 text-2xl font-bold">{product.title}</h1>
       <ProductVariant />
-      <p className="py-4 text-xl font-light">
-        {(selectedVariant.price / 100).toLocaleString("ko-KR", {
-          style: "currency",
-          currency: "KRW",
-        })}
-      </p>
+      <p className="py-4 text-xl font-light">{parsePrice(selectedVariant.price)}</p>
       <p className="text-sm">
         세금이 포함됩니다. <span className="underline">배송료는</span> 결제 시 계산됩니다.
       </p>
@@ -148,8 +159,13 @@ export function ProductInfo() {
 
       <Quantity value={quantity} onChange={setQuantity} />
 
-      <Button size="lg" className="mt-6 w-full">
-        카트에 추가
+      <Button
+        size="lg"
+        className="mt-6 w-full"
+        onClick={() => addToCartMutation.mutate()}
+        disabled={addToCartMutation.isPending}
+      >
+        {addToCartMutation.isPending ? "추가 중..." : "카트에 추가"}
       </Button>
 
       <p
