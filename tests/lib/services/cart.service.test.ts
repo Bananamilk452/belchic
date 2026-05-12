@@ -75,19 +75,8 @@ describe("Cart Service", () => {
       );
     });
 
-    it("둘 다 없으면 빈 where로 조회한다", async () => {
-      mockPrisma.cart.findMany.mockResolvedValue([]);
-
-      const result = await getCart();
-
-      expect(mockPrisma.cart.findMany).toHaveBeenCalledWith({
-        where: {},
-        include: {
-          variant: { include: { product: true } },
-        },
-        orderBy: { createdAt: "asc" },
-      });
-      expect(result.items).toHaveLength(0);
+    it("둘 다 없으면 에러를 발생시킨다", async () => {
+      await expect(getCart()).rejects.toThrow("알 수 없는 오류가 발생했습니다");
     });
 
     it("product가 null인 항목은 필터링한다", async () => {

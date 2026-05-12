@@ -31,9 +31,9 @@ export function CartItem({ item, isLoading, onQuantityChange, onRemove }: CartIt
     [item.id, debouncedOnQuantityChange],
   );
 
-  const handleRemove = () => {
+  const handleRemove = useCallback(() => {
     onRemove(item.id);
-  };
+  }, [item.id, onRemove]);
 
   useEffect(() => {
     return () => {

@@ -26,10 +26,10 @@ export const auth = betterAuth({
           if (cartSessionId) {
             try {
               await mergeGuestCart(cartSessionId, session.user.id);
-              cookieStore.delete(CART_SESSION_ID);
             } catch (error) {
               console.error("Failed to merge guest cart:", error);
             }
+            cookieStore.delete(CART_SESSION_ID);
           }
         }
       }

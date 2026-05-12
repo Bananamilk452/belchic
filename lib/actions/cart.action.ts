@@ -1,7 +1,9 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { headers } from "next/headers";
 
+import { auth } from "../auth";
 import {
   addToCartSchema,
   getCartSchema,
@@ -29,6 +31,13 @@ import type { ActionPromise } from "../types/action.types";
 
 const CART_SESSION_ID = "cart_session_id";
 
+async function getUserId(): Promise<string | undefined> {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  return session?.user.id;
+}
+
 async function getCartSessionId(): Promise<string | undefined> {
   const cookieStore = await cookies();
   return cookieStore.get(CART_SESSION_ID)?.value;
@@ -40,7 +49,7 @@ async function setCartSessionId(sessionId: string): Promise<void> {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 30, // 30 days
+    maxAge: 60 * 60 * 24 * 30,
   });
 }
 
@@ -61,11 +70,12 @@ async function getOrGenerateSessionId(): Promise<string | undefined> {
 
 export async function getCartAction(): ActionPromise<GetCartResult> {
   return withAction(async () => {
-    const sessionId = await getCartSessionId();
+    const userId = await getUserId();
+    const sessionId = userId ? undefined : await getCartSessionId();
 
     const validatedParams = getCartSchema.parse({
       sessionId,
-      userId: undefined,
+      userId,
     });
 
     return getCart(validatedParams.sessionId, validatedParams.userId);
@@ -77,13 +87,14 @@ export async function addToCartAction(
   quantity: number = 1,
 ): ActionPromise<AddToCartResult> {
   return withAction(async () => {
-    const sessionId = await getOrGenerateSessionId();
+    const userId = await getUserId();
+    const sessionId = userId ? undefined : await getOrGenerateSessionId();
 
     const validatedParams = addToCartSchema.parse({
       variantId,
       quantity,
       sessionId,
-      userId: undefined,
+      userId,
     });
 
     return addToCart(
@@ -100,13 +111,14 @@ export async function updateCartItemAction(
   quantity: number,
 ): ActionPromise<UpdateCartItemResult> {
   return withAction(async () => {
-    const sessionId = await getCartSessionId();
+    const userId = await getUserId();
+    const sessionId = userId ? undefined : await getCartSessionId();
 
     const validatedParams = updateCartItemSchema.parse({
       id,
       quantity,
       sessionId,
-      userId: undefined,
+      userId,
     });
 
     return updateCartItem(
@@ -120,12 +132,13 @@ export async function updateCartItemAction(
 
 export async function removeFromCartAction(id: string): ActionPromise<RemoveFromCartResult> {
   return withAction(async () => {
-    const sessionId = await getCartSessionId();
+    const userId = await getUserId();
+    const sessionId = userId ? undefined : await getCartSessionId();
 
     const validatedParams = removeFromCartSchema.parse({
       id,
       sessionId,
-      userId: undefined,
+      userId,
     });
 
     return removeFromCart(validatedParams.id, validatedParams.sessionId, validatedParams.userId);

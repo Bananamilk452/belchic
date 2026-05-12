@@ -58,12 +58,12 @@ describe("CartItem", () => {
 
   it("개별 가격을 렌더링한다", () => {
     renderWithProviders(<CartItem {...defaultProps} />);
-    expect(screen.getByText("₩500")).toBeInTheDocument();
+    expect(screen.getByText("₩50,000")).toBeInTheDocument();
   });
 
   it("총 가격(수량 * 단가)을 렌더링한다", () => {
     renderWithProviders(<CartItem {...defaultProps} />);
-    expect(screen.getByText("₩1,000")).toBeInTheDocument();
+    expect(screen.getByText("₩100,000")).toBeInTheDocument();
   });
 
   it("제품 이미지를 렌더링한다", () => {

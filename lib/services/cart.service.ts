@@ -11,6 +11,10 @@ import type {
 } from "../models/cart.model";
 
 export async function getCart(sessionId?: string, userId?: string): Promise<GetCartResult> {
+  if (!sessionId && !userId) {
+    throw new Error(ERROR_MESSAGES.UNKNOWN_ERROR);
+  }
+
   const whereClause: {
     userId?: string;
     sessionId?: string;

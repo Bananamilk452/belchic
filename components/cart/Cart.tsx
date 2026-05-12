@@ -3,7 +3,7 @@
 import { SuspenseQuery } from "@suspensive/react-query";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { Button } from "../ui/button";
 import { CartItem } from "./CartItem";
@@ -31,14 +31,18 @@ export function Cart() {
       queryClient.setQueryData(cartQueryOptions().queryKey, (old: GetCartResult | undefined) => {
         if (!old) return old;
 
+        const updatedItems = old.items.map((item) =>
+          item.id === id ? { ...item, quantity } : item,
+        );
+        const total = updatedItems.reduce(
+          (sum, item) => sum + item.quantity * item.variant.price,
+          0,
+        );
+
         return {
           ...old,
-          items: old.items.map((item) => (item.id === id ? { ...item, quantity } : item)),
-          total: old.items.reduce((sum: number, item) => {
-            const itemTotal =
-              item.id === id ? quantity * item.variant.price : item.quantity * item.variant.price;
-            return sum + itemTotal;
-          }, 0),
+          items: updatedItems,
+          total,
         };
       });
 
@@ -95,6 +99,20 @@ export function Cart() {
     },
   });
 
+  const handleQuantityChange = useCallback(
+    (id: string, quantity: number) => {
+      updateQuantityMutation.mutate({ id, quantity });
+    },
+    [updateQuantityMutation],
+  );
+
+  const handleRemove = useCallback(
+    (id: string) => {
+      removeItemMutation.mutate(id);
+    },
+    [removeItemMutation],
+  );
+
   return (
     <SuspenseQuery {...cartQueryOptions()}>
       {({ data }) => (
@@ -126,10 +144,8 @@ export function Cart() {
                         key={item.id}
                         item={item}
                         isLoading={loadingItemId === item.id}
-                        onQuantityChange={(id, quantity) =>
-                          updateQuantityMutation.mutate({ id, quantity })
-                        }
-                        onRemove={(id) => removeItemMutation.mutate(id)}
+                        onQuantityChange={handleQuantityChange}
+                        onRemove={handleRemove}
                       />
                     ))}
                   </tbody>
