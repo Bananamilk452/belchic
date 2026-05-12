@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { CollectionProductList } from "@/components/collection/CollectionProductList";
 import { getQueryClient } from "@/hooks/getQueryClient";
 import { productsQueryOptions } from "@/lib/queries/product.query";
+import { ProductSortSchema } from "@/lib/schemas/product.schema";
 
 import type { GetProductsParams } from "@/lib/models/product.model";
 
@@ -16,7 +17,7 @@ export default async function CollectionPage({
   searchParams,
 }: {
   params: Promise<{ collection: string }>;
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; sort?: string }>;
 }) {
   const { collection } = await params;
   const mapped = COLLECTION_DEFAULT_OPTIONS[collection];
@@ -31,9 +32,17 @@ export default async function CollectionPage({
     ...mapped,
   };
 
-  const { page: pageParam } = await searchParams;
+  const { page: pageParam, sort: sortParam } = await searchParams;
+
   if (pageParam) {
     defaultOptions.page = Number(pageParam) || 1;
+  }
+
+  if (sortParam) {
+    const parsed = ProductSortSchema.safeParse(sortParam);
+    if (parsed.success) {
+      defaultOptions.sort = parsed.data;
+    }
   }
 
   const queryClient = getQueryClient();

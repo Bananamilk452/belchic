@@ -1,9 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useQueryState, parseAsInteger } from "nuqs";
+import { useQueryState, parseAsInteger, parseAsStringLiteral } from "nuqs";
 
 import { ProductCard } from "@/components/product/ProductCard";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import {
   Pagination,
   PaginationContent,
@@ -16,6 +17,17 @@ import {
 import { productsQueryOptions } from "@/lib/queries/product.query";
 
 import type { GetProductsParams } from "@/lib/models/product.model";
+
+const SORT_OPTIONS = [
+  { value: "date_desc", label: "최신순" },
+  { value: "date_asc", label: "오래된순" },
+  { value: "price_asc", label: "가격 낮은 순" },
+  { value: "price_desc", label: "가격 높은 순" },
+  { value: "name_asc", label: "알파벳 순,A-Z" },
+  { value: "name_desc", label: "알파벳 순,Z-A" },
+] as const;
+
+const SORT_VALUES = SORT_OPTIONS.map((o) => o.value);
 
 function getPaginationItems(current: number, total: number): (number | string)[] {
   if (total <= 7) {
@@ -33,23 +45,63 @@ function getPaginationItems(current: number, total: number): (number | string)[]
   return [1, "ellipsis", current - 1, current, current + 1, "ellipsis", total];
 }
 
+function buildHref(targetPage: number, sort: string, defaultSort?: string) {
+  const params = new URLSearchParams();
+  params.set("page", String(targetPage));
+  if (sort !== defaultSort) {
+    params.set("sort", sort);
+  }
+  return `?${params.toString()}`;
+}
+
 export function CollectionProductList({ defaultOptions }: { defaultOptions: GetProductsParams }) {
   const [page, setPage] = useQueryState(
     "page",
     parseAsInteger.withDefault(defaultOptions.page ?? 1),
   );
-  const { data, isPending } = useQuery(productsQueryOptions({ ...defaultOptions, page }));
+  const [sort, setSort] = useQueryState(
+    "sort",
+    parseAsStringLiteral(SORT_VALUES).withDefault(defaultOptions.sort ?? "date_desc"),
+  );
+
+  const { data, isPending } = useQuery(productsQueryOptions({ ...defaultOptions, page, sort }));
 
   if (isPending) {
-    return <div className="w-full p-4"><span>Loading...</span></div>;
+    // TODO: 로딩 개선
+    return (
+      <div className="w-full p-4">
+        <span>Loading...</span>
+      </div>
+    );
   }
 
   if (!data) {
     return null;
   }
 
+  const handleSortChange = (newSort: (typeof SORT_VALUES)[number]) => {
+    setSort(newSort);
+    setPage(1);
+  };
+
   return (
     <div className="flex w-full flex-col items-center py-10">
+      <div className="mb-4 flex w-full max-w-6xl items-center justify-end px-4">
+        <span className="text-sm text-muted-foreground py-1 h-7.5">정렬 기준 : </span>
+        <NativeSelect
+          value={sort}
+          onChange={(e) => handleSortChange(e.target.value as (typeof SORT_VALUES)[number])}
+          className="**:rounded-none **:bg-transparent"
+          size="sm"
+        >
+          {SORT_OPTIONS.map((opt) => (
+            <NativeSelectOption key={opt.value} value={opt.value}>
+              {opt.label}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
+        <span className="text-sm text-muted-foreground">{data.pagination.total}개 제품</span>
+      </div>
       <div className="grid max-w-6xl grid-cols-2 items-start justify-center gap-4 px-4 md:grid-cols-4">
         {data.products.map((product) => (
           <div key={product.id} className="col-span-1 w-full">
@@ -62,7 +114,7 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
           {data.pagination.hasPrev && (
             <PaginationItem>
               <PaginationPrevious
-                href={`?page=${page - 1}`}
+                href={buildHref(page - 1, sort, defaultOptions.sort)}
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page - 1);
@@ -76,7 +128,7 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  href={`?page=${item}`}
+                  href={buildHref(item as number, sort, defaultOptions.sort)}
                   isActive={item === page}
                   onClick={(e) => {
                     e.preventDefault();
@@ -91,7 +143,7 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
           {data.pagination.hasNext && (
             <PaginationItem>
               <PaginationNext
-                href={`?page=${page + 1}`}
+                href={buildHref(page + 1, sort, defaultOptions.sort)}
                 onClick={(e) => {
                   e.preventDefault();
                   setPage(page + 1);
