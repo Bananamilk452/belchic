@@ -1,9 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": ["nextjs", "typescript"],
-  "categories": {
-    "correctness": "off"
-  },
   "env": {
     "builtin": true
   },
@@ -11,7 +8,6 @@
   "rules": {
     "no-array-constructor": "error",
     "no-unused-expressions": "warn",
-    "no-unused-vars": "warn",
     "nextjs/google-font-display": "warn",
     "nextjs/google-font-preconnect": "warn",
     "nextjs/next-script-for-ga": "warn",
