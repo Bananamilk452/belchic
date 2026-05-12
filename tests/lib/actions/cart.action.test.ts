@@ -26,8 +26,6 @@ vi.mock("next/headers", () => ({
   headers: vi.fn(() => Promise.resolve(new Headers())),
 }));
 
-import * as cartService from "@/lib/services/cart.service";
-
 import {
   getCartAction,
   addToCartAction,
@@ -36,6 +34,7 @@ import {
   mergeGuestCartToUserAction,
   clearCartSessionIdAction,
 } from "@/lib/actions/cart.action";
+import * as cartService from "@/lib/services/cart.service";
 
 const mockGetCart = vi.mocked(cartService.getCart);
 const mockAddToCart = vi.mocked(cartService.addToCart);
