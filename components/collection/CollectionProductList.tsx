@@ -15,8 +15,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { productsQueryOptions } from "@/lib/queries/product.query";
-
 import { ProductSortSchema } from "@/lib/schemas/product.schema";
+
 import type { GetProductsParams } from "@/lib/models/product.model";
 
 const SORT_OPTIONS = [
@@ -65,7 +65,9 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
     parseAsStringLiteral(SORT_VALUES).withDefault(defaultOptions.sort ?? "date_desc"),
   );
 
-  const { data, isPending, isError } = useQuery(productsQueryOptions({ ...defaultOptions, page, sort }));
+  const { data, isPending, isError } = useQuery(
+    productsQueryOptions({ ...defaultOptions, page, sort }),
+  );
 
   if (isPending) {
     // TODO: 로딩 개선
