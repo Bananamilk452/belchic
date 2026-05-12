@@ -1,3 +1,13 @@
+# pnpm v11
+allowBuilds:
+  "@prisma/engines": true
+  "@suspensive/react-query": true
+  msw: true
+  prisma: true
+  sharp: false
+  unrs-resolver: false
+# pnpm v10
+minimumReleaseAge: 1440 # v11 default value
 ignoredBuiltDependencies:
   - sharp
   - unrs-resolver
