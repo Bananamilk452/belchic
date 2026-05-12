@@ -11,18 +11,21 @@ export function Quantity({
   min = 1,
   max = 99,
   className,
+  disabled = false,
 }: {
   value?: number;
   onChange?: (value: number) => void;
   min?: number;
   max?: number;
   className?: string;
+  disabled?: boolean;
 }) {
   const [internalValue, setInternalValue] = useState(controlledValue ?? 1);
   const value = controlledValue ?? internalValue;
   const isControlled = controlledValue !== undefined;
 
   const updateValue = (newValue: number) => {
+    if (disabled) return;
     const clampedValue = Math.max(min, Math.min(max, newValue));
     if (isControlled) {
       onChange?.(clampedValue);
@@ -65,7 +68,7 @@ export function Quantity({
       <button
         type="button"
         onClick={handleDecrement}
-        disabled={value <= min}
+        disabled={value <= min || disabled}
         className="flex size-10 items-center justify-center text-gray-600 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
         aria-label="감소"
       >
@@ -78,12 +81,13 @@ export function Quantity({
         onBlur={handleBlur}
         min={min}
         max={max}
-        className="w-12 bg-white text-center text-sm outline-none [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+        disabled={disabled}
+        className="w-12 bg-white text-center text-sm outline-none [-moz-appearance:_textfield] disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400 [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
       />
       <button
         type="button"
         onClick={handleIncrement}
-        disabled={value >= max}
+        disabled={value >= max || disabled}
         className="flex size-10 items-center justify-center text-gray-600 transition-colors hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30"
         aria-label="증가"
       >
