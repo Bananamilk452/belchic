@@ -1,7 +1,7 @@
 # pnpm v11
 allowBuilds:
-  '@prisma/engines': true
-  '@suspensive/react-query': true
+  "@prisma/engines": true
+  "@suspensive/react-query": true
   msw: true
   prisma: true
   sharp: false
