@@ -51,34 +51,34 @@ const NAV_MENU: Array<NavMenu> = [
   },
   {
     label: "새로 들어온 상품",
-    path: "/new",
+    path: "/collections/new",
   },
-  {
-    label: "드롭다운 테스트",
-    submenu: [
-      {
-        label: "테스트 메뉴 1",
-        path: "/1",
-      },
-      {
-        label: "테스트 메뉴 2",
-        path: "/2",
-      },
-      {
-        label: "드롭다운 테스트",
-        submenu: [
-          {
-            label: "테스트 메뉴 1",
-            path: "/1",
-          },
-          {
-            label: "테스트 메뉴 2",
-            path: "/2",
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   label: "드롭다운 테스트",
+  //   submenu: [
+  //     {
+  //       label: "테스트 메뉴 1",
+  //       path: "/1",
+  //     },
+  //     {
+  //       label: "테스트 메뉴 2",
+  //       path: "/2",
+  //     },
+  //     {
+  //       label: "드롭다운 테스트",
+  //       submenu: [
+  //         {
+  //           label: "테스트 메뉴 1",
+  //           path: "/1",
+  //         },
+  //         {
+  //           label: "테스트 메뉴 2",
+  //           path: "/2",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 ];
 
 /**

@@ -10,6 +10,7 @@ import type { GetProductsParams } from "@/lib/models/product.model";
 
 const COLLECTION_DEFAULT_OPTIONS: Record<string, Partial<GetProductsParams>> = {
   belchic: { sort: "date_desc" },
+  new: { sort: "date_desc" },
 };
 
 export default async function CollectionPage({
