@@ -38,8 +38,11 @@ export default async function CollectionPage({
   const options: GetProductsParams = {
     ...defaultOptions,
     ...(pageParam ? { page: Number(pageParam) || 1 } : {}),
-    ...(sortParam && ProductSortSchema.safeParse(sortParam).success
-      ? { sort: ProductSortSchema.parse(sortParam) }
+    ...(sortParam
+      ? (() => {
+          const parsed = ProductSortSchema.safeParse(sortParam);
+          return parsed.success ? { sort: parsed.data } : {};
+        })()
       : {}),
   };
 
