@@ -37,7 +37,7 @@ describe("CartItem", () => {
           priceMax: 60000,
           images: ["https://example.com/image1.jpg"],
           featuredImage: "https://example.com/image1.jpg",
-          options: ["사이즈"],
+          options: ["색상", "사이즈"],
           content: "상세 설명",
         },
       },
@@ -51,9 +51,10 @@ describe("CartItem", () => {
     expect(screen.getByText("테스트 제품")).toBeInTheDocument();
   });
 
-  it("variant 제목을 렌더링한다", () => {
+  it("variant들을 렌더링한다", () => {
     renderWithProviders(<CartItem {...defaultProps} />);
-    expect(screen.getByText("블랙 / M")).toBeInTheDocument();
+    expect(screen.getByText("색상: 블랙")).toBeInTheDocument();
+    expect(screen.getByText("사이즈: M")).toBeInTheDocument();
   });
 
   it("개별 가격을 렌더링한다", () => {

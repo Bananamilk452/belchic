@@ -15,7 +15,7 @@ export const mockProduct = {
   priceMax: 60000,
   images: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
   featuredImage: "https://example.com/image1.jpg",
-  options: ["사이즈"],
+  options: ["색상", "사이즈"],
   content: "테스트 제품 상세 설명",
 };
 
