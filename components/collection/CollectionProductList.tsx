@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/pagination";
 import { productsQueryOptions } from "@/lib/queries/product.query";
 
+import { ProductSortSchema } from "@/lib/schemas/product.schema";
 import type { GetProductsParams } from "@/lib/models/product.model";
 
 const SORT_OPTIONS = [
@@ -98,7 +99,12 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
         <span className="h-7.5 py-1 text-sm text-muted-foreground">정렬 기준 : </span>
         <NativeSelect
           value={sort}
-          onChange={(e) => handleSortChange(e.target.value as (typeof SORT_VALUES)[number])}
+          onChange={(e) => {
+            const parsed = ProductSortSchema.safeParse(e.target.value);
+            if (parsed.success) {
+              handleSortChange(parsed.data);
+            }
+          }}
           className="**:rounded-none **:bg-transparent"
           size="sm"
         >
