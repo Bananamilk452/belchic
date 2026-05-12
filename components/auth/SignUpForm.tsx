@@ -22,6 +22,9 @@ export function SignUpForm() {
       passwordConfirm: "",
     },
   });
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async (values: SignUpFormValues) => {
     const { error } = await authClient.signUp.email({
@@ -32,9 +35,9 @@ export function SignUpForm() {
 
     if (error) {
       if (error.status === 409) {
-        form.setError("email", { message: ERROR_MESSAGES.EMAIL_ALREADY_IN_USE });
+        form.setError("root", { message: ERROR_MESSAGES.EMAIL_ALREADY_IN_USE });
       } else {
-        form.setError("email", { message: ERROR_MESSAGES.FAILED_TO_SIGN_UP });
+        form.setError("root", { message: ERROR_MESSAGES.FAILED_TO_SIGN_UP });
       }
       return;
     }
@@ -67,6 +70,7 @@ export function SignUpForm() {
           <Field data-invalid={fieldState.invalid}>
             <Input
               {...field}
+              type="email"
               aria-invalid={fieldState.invalid}
               className="mb-4"
               placeholder="이메일"
@@ -111,8 +115,10 @@ export function SignUpForm() {
         )}
       />
 
-      <Button type="submit" size="lg">
-        회원가입
+      {form.formState.errors.root && <FieldError errors={[form.formState.errors.root]} />}
+
+      <Button type="submit" size="lg" disabled={isSubmitting}>
+        {isSubmitting ? "계정 생성 중..." : "계정 생성"}
       </Button>
     </form>
   );

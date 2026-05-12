@@ -20,6 +20,9 @@ export function SignInForm() {
       password: "",
     },
   });
+  const {
+    formState: { isSubmitting },
+  } = form;
 
   const onSubmit = async (values: SignInFormValues) => {
     const { error } = await authClient.signIn.email({
@@ -29,9 +32,9 @@ export function SignInForm() {
 
     if (error) {
       if (error.status === 400) {
-        form.setError("email", { message: ERROR_MESSAGES.EMAIL_OR_PASSWORD_INVALID });
+        form.setError("root", { message: ERROR_MESSAGES.EMAIL_OR_PASSWORD_INVALID });
       } else {
-        form.setError("email", { message: ERROR_MESSAGES.FAILED_TO_SIGN_IN });
+        form.setError("root", { message: ERROR_MESSAGES.FAILED_TO_SIGN_IN });
       }
       return;
     }
@@ -48,6 +51,7 @@ export function SignInForm() {
           <Field data-invalid={fieldState.invalid}>
             <Input
               {...field}
+              type="email"
               aria-invalid={fieldState.invalid}
               className="mb-4"
               placeholder="이메일"
@@ -75,8 +79,10 @@ export function SignInForm() {
         )}
       />
 
-      <Button type="submit" size="lg">
-        로그인
+      {form.formState.errors.root && <FieldError errors={[form.formState.errors.root]} />}
+
+      <Button type="submit" size="lg" disabled={isSubmitting}>
+        {isSubmitting ? "로그인 중..." : "로그인"}
       </Button>
     </form>
   );

@@ -4,6 +4,7 @@ export const ERROR_MESSAGES = {
   UNKNOWN_ERROR: "알 수 없는 오류가 발생했습니다",
   NAME_REQUIRED: "이름을 입력해주세요",
   EMAIL_REQUIRED: "이메일을 입력해주세요",
+  EMAIL_INVALID: "유효하지 않은 이메일입니다",
   PASSWORD_REQUIRED: "비밀번호를 입력해주세요",
   PASSWORD_MIN_LENGTH: "비밀번호는 최소 8자 이상이어야 합니다",
   PASSWORD_CONFIRM_REQUIRED: "비밀번호 확인을 입력해주세요",
