@@ -4,9 +4,6 @@
     "nextjs",
     "typescript"
   ],
-  "categories": {
-    "correctness": "off"
-  },
   "env": {
     "builtin": true
   },
