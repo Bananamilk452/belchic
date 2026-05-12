@@ -32,3 +32,10 @@ export async function withAction<T>(fn: () => Promise<T>): ActionPromise<T> {
     };
   }
 }
+
+export function parsePrice(price: number) {
+  return price.toLocaleString("ko-KR", {
+    style: "currency",
+    currency: "KRW",
+  });
+}

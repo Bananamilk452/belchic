@@ -2,6 +2,7 @@ import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 
 import { GetProductsResult } from "@/lib/models/product.model";
+import { parsePrice } from "@/lib/utils";
 
 type ProductCardProps = {
   product: GetProductsResult["products"][number];
@@ -34,7 +35,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {product.title}
         </Link>
         <p className="mt-1 text-base">
-          {(product.price / 100).toLocaleString("ko-KR", { style: "currency", currency: "KRW" })}
+          {parsePrice(product.price)}
           {product.variants.length > 1 && "부터"}
         </p>
       </div>

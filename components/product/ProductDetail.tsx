@@ -13,7 +13,7 @@ import {
   productByHandleQueryOptions,
   relatedProductsByHandleQueryOptions,
 } from "@/lib/queries/product.query";
-import { cn } from "@/lib/utils";
+import { cn, parsePrice } from "@/lib/utils";
 
 type ProductDetailProps = {
   handle: string;
@@ -131,12 +131,7 @@ export function ProductInfo() {
     <div className="flex flex-col items-start">
       <h1 className="mb-4 text-2xl font-bold">{product.title}</h1>
       <ProductVariant />
-      <p className="py-4 text-xl font-light">
-        {(selectedVariant.price / 100).toLocaleString("ko-KR", {
-          style: "currency",
-          currency: "KRW",
-        })}
-      </p>
+      <p className="py-4 text-xl font-light">{parsePrice(selectedVariant.price)}</p>
       <p className="text-sm">
         세금이 포함됩니다. <span className="underline">배송료는</span> 결제 시 계산됩니다.
       </p>
