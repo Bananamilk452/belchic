@@ -46,6 +46,25 @@ model Variant {
 
   product   Product? @relation(fields: [productId], references: [id])
   productId String?
+  carts     Cart[]
+}
+
+model Cart {
+  id        String   @id @default(cuid())
+  userId    String?
+  variantId String
+  quantity  Int      @default(1)
+  sessionId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sessionId])
+  @@unique([sessionId, variantId])
+  @@unique([userId, variantId])
 }
 
 model User {
@@ -58,6 +77,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  carts         Cart[]
 
   @@unique([email])
   @@map("user")
