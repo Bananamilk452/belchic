@@ -87,7 +87,7 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
   return (
     <div className="flex w-full flex-col items-center py-10">
       <div className="mb-4 flex w-full max-w-6xl items-center justify-end px-4">
-        <span className="text-sm text-muted-foreground py-1 h-7.5">정렬 기준 : </span>
+        <span className="h-7.5 py-1 text-sm text-muted-foreground">정렬 기준 : </span>
         <NativeSelect
           value={sort}
           onChange={(e) => handleSortChange(e.target.value as (typeof SORT_VALUES)[number])}
