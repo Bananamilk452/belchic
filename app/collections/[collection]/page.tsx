@@ -35,25 +35,22 @@ export default async function CollectionPage({
 
   const { page: pageParam, sort: sortParam } = await searchParams;
 
-  if (pageParam) {
-    defaultOptions.page = Number(pageParam) || 1;
-  }
-
-  if (sortParam) {
-    const parsed = ProductSortSchema.safeParse(sortParam);
-    if (parsed.success) {
-      defaultOptions.sort = parsed.data;
-    }
-  }
+  const options: GetProductsParams = {
+    ...defaultOptions,
+    ...(pageParam ? { page: Number(pageParam) || 1 } : {}),
+    ...(sortParam && ProductSortSchema.safeParse(sortParam).success
+      ? { sort: ProductSortSchema.parse(sortParam) }
+      : {}),
+  };
 
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(productsQueryOptions(defaultOptions));
+  await queryClient.prefetchQuery(productsQueryOptions(options));
 
   return (
     <div>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <CollectionProductList defaultOptions={defaultOptions} />
+        <CollectionProductList defaultOptions={options} />
       </HydrationBoundary>
     </div>
   );
