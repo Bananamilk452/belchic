@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/pagination";
 import { productsQueryOptions } from "@/lib/queries/product.query";
 
+import type { GetProductsParams } from "@/lib/models/product.model";
+
 function getPaginationItems(current: number, total: number): (number | string)[] {
   if (total <= 7) {
     return Array.from({ length: total }, (_, i) => i + 1);
@@ -31,17 +33,15 @@ function getPaginationItems(current: number, total: number): (number | string)[]
   return [1, "ellipsis", current - 1, current, current + 1, "ellipsis", total];
 }
 
-export function CollectionProductList({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  collection,
-}: {
-  collection: string;
-}) {
-  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1));
-  const { data, isPending } = useQuery(productsQueryOptions({ page, limit: 32 }));
+export function CollectionProductList({ defaultOptions }: { defaultOptions: GetProductsParams }) {
+  const [page, setPage] = useQueryState(
+    "page",
+    parseAsInteger.withDefault(defaultOptions.page ?? 1),
+  );
+  const { data, isPending } = useQuery(productsQueryOptions({ ...defaultOptions, page }));
 
   if (isPending) {
-    return <div>Loading...</div>;
+    return <div className="w-full p-4"><span>Loading...</span></div>;
   }
 
   if (!data) {
