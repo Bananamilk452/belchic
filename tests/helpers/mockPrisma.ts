@@ -12,6 +12,7 @@ export function createMockPrisma() {
     product: {
       findMany: vi.fn(),
       findFirst: vi.fn(),
+      count: vi.fn(),
     },
     variant: {
       findMany: vi.fn(),
