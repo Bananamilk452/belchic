@@ -245,7 +245,15 @@ function MobileNavSheet({
 
 export function GlobalHeader() {
   return (
-    <div className="flex w-full items-center justify-center border-b border-border bg-white">
+    <div className="flex w-full flex-col items-center justify-center border-b border-border bg-white">
+      <div className="w-full bg-black py-2 text-center font-serif text-xs text-white">
+        정보: 프론트엔드 기술 데모 및 포트폴리오를 위한 사이트입니다. 실제 서비스가 아니며, 모든
+        상품과 정보는{" "}
+        <Link href="https://belchic.shop/" className="underline">
+          Belchic 쇼핑몰
+        </Link>
+        에서 확인해주세요.
+      </div>
       <div className="flex w-full max-w-7xl items-center justify-between gap-6 px-4 py-5 md:px-12">
         <div className="flex items-center justify-center gap-2">
           <MobileNavSheet menus={NAV_MENU} />
