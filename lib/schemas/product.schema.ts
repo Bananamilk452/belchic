@@ -15,8 +15,8 @@ export const ProductSortSchema = z.enum([
 ]);
 
 export const GetProductsParamsSchema = z.object({
-  page: z.number().optional(),
-  limit: z.number().optional(),
+  page: z.number().int().min(1).optional(),
+  limit: z.number().int().min(1).optional(),
   sort: ProductSortSchema.optional(),
 });
 
@@ -26,5 +26,5 @@ export const GetProductByHandleParamsSchema = z.object({
 
 export const GetRelatedProductsByHandleParamsSchema = z.object({
   handle: z.string().min(1, ERROR_MESSAGES.HANDLE_REQUIRED),
-  limit: z.number().optional(),
+  limit: z.number().int().min(1).optional(),
 });

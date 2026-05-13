@@ -18,7 +18,7 @@ const sortOrderMap = {
 } as const satisfies Record<ProductSort, Record<string, "asc" | "desc">>;
 
 export async function getProducts(params: GetProductsParams): Promise<GetProductsResult> {
-  const page = params.page ?? 1;
+  const page = Math.max(params.page ?? 1, 1);
   const limit = params.limit ?? 10;
   const skip = (page - 1) * limit;
   const orderBy = params.sort ? sortOrderMap[params.sort] : { createdAt: "desc" as const };
