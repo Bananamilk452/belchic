@@ -17,6 +17,9 @@ import {
 
 const mockGetProductsAction = vi.mocked(productActions.getProductsAction);
 const mockGetProductByHandleAction = vi.mocked(productActions.getProductByHandleAction);
+const mockGetRelatedProductsByHandleAction = vi.mocked(
+  productActions.getRelatedProductsByHandleAction,
+);
 
 describe("productsQueryOptions", () => {
   beforeEach(() => {
@@ -74,9 +77,29 @@ describe("productByHandleQueryOptions", () => {
 });
 
 describe("relatedProductsByHandleQueryOptions", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("queryKey에 handle과 limit을 포함한다", () => {
     const options = relatedProductsByHandleQueryOptions("test-product", 5);
 
     expect(options.queryKey).toEqual(["relatedProducts", "test-product", 5]);
+  });
+
+  it("queryFn이 getRelatedProductsByHandleAction을 호출한다", async () => {
+    mockGetRelatedProductsByHandleAction.mockResolvedValue({
+      success: true,
+      data: { products: [] },
+    });
+
+    const options = relatedProductsByHandleQueryOptions("test-product", 5);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    await (options.queryFn as any)();
+
+    expect(mockGetRelatedProductsByHandleAction).toHaveBeenCalledWith({
+      handle: "test-product",
+      limit: 5,
+    });
   });
 });

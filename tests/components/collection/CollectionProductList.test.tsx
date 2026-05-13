@@ -5,6 +5,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createMockGetProductsResult, mockProductsWithVariants } from "../../products/mockData";
 
+vi.mock("@/app/collections/[collection]/loading", () => ({
+  default: () => <div data-testid="collection-loading">Loading...</div>,
+}));
+
 vi.mock("@/components/product/ProductCard", () => ({
   ProductCard: ({ product }: { product: { title: string } }) => (
     <div data-testid="product-card">{product.title}</div>
@@ -63,6 +67,7 @@ describe("CollectionProductList", () => {
 
       renderCollectionList(<CollectionProductList defaultOptions={defaultOptions} />);
 
+      expect(screen.getByTestId("collection-loading")).toBeInTheDocument();
       expect(screen.queryByText("상품을 불러오는 중 오류가 발생했습니다.")).not.toBeInTheDocument();
       expect(screen.queryByTestId("product-card")).not.toBeInTheDocument();
     });

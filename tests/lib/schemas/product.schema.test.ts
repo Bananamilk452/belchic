@@ -41,9 +41,16 @@ describe("GetProductsParamsSchema", () => {
     expect(() => GetProductsParamsSchema.parse({ page: "abc" })).toThrow();
   });
 
-  it("page가 0이면 유효하다", () => {
-    const result = GetProductsParamsSchema.parse({ page: 0 });
-    expect(result.page).toBe(0);
+  it("page가 0이면 에러를 발생시킨다", () => {
+    expect(() => GetProductsParamsSchema.parse({ page: 0 })).toThrow();
+  });
+
+  it("page가 음수이면 에러를 발생시킨다", () => {
+    expect(() => GetProductsParamsSchema.parse({ page: -1 })).toThrow();
+  });
+
+  it("limit이 0이면 에러를 발생시킨다", () => {
+    expect(() => GetProductsParamsSchema.parse({ limit: 0 })).toThrow();
   });
 
   it("limit이 문자열이면 에러를 발생시킨다", () => {
@@ -89,6 +96,12 @@ describe("GetRelatedProductsByHandleParamsSchema", () => {
     });
     expect(result.handle).toBe("test-product");
     expect(result.limit).toBe(5);
+  });
+
+  it("limit이 0이면 에러를 발생시킨다", () => {
+    expect(() =>
+      GetRelatedProductsByHandleParamsSchema.parse({ handle: "test", limit: 0 }),
+    ).toThrow();
   });
 
   it("handle이 빈 문자열이면 에러를 발생시킨다", () => {
