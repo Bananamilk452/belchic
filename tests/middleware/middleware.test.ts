@@ -6,6 +6,7 @@ vi.mock("better-auth/cookies", () => ({
 }));
 
 import { getSessionCookie } from "better-auth/cookies";
+
 import { middleware, config } from "@/middleware";
 
 function createRequest(pathname: string) {
