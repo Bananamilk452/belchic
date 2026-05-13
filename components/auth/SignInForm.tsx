@@ -31,11 +31,7 @@ export function SignInForm() {
     });
 
     if (error) {
-      if (error.status === 400) {
-        form.setError("root", { message: ERROR_MESSAGES.EMAIL_OR_PASSWORD_INVALID });
-      } else {
-        form.setError("root", { message: ERROR_MESSAGES.FAILED_TO_SIGN_IN });
-      }
+      form.setError("root", { message: error.message });
       return;
     }
 

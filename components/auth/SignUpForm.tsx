@@ -34,11 +34,7 @@ export function SignUpForm() {
     });
 
     if (error) {
-      if (error.status === 409) {
-        form.setError("root", { message: ERROR_MESSAGES.EMAIL_ALREADY_IN_USE });
-      } else {
-        form.setError("root", { message: ERROR_MESSAGES.FAILED_TO_SIGN_UP });
-      }
+      form.setError("root", { message: error.message });
       return;
     }
 
