@@ -61,14 +61,22 @@ describe("Cart Actions", () => {
       }
     });
 
-    it("sessionId가 없어도 에러가 발생하지 않는다", async () => {
+    it("sessionId가 없으면 새로 생성한다", async () => {
       mockCookieStore.get.mockReturnValue(undefined);
       mockGetCart.mockResolvedValue({ items: [], total: 0 });
 
       const result = await getCartAction();
 
+      expect(mockCookieStore.set).toHaveBeenCalledWith(
+        "cart_session_id",
+        expect.any(String),
+        expect.objectContaining({
+          httpOnly: true,
+          sameSite: "lax",
+        }),
+      );
+      expect(mockGetCart).toHaveBeenCalledWith(expect.any(String), undefined);
       expect(result.success).toBe(true);
-      expect(mockGetCart).toHaveBeenCalledWith(undefined, undefined);
     });
   });
 

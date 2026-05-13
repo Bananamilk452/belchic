@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useQueryState, parseAsInteger, parseAsStringLiteral } from "nuqs";
 
+import CollectionLoading from "@/app/collections/[collection]/loading";
 import { ProductCard } from "@/components/product/ProductCard";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import {
@@ -71,11 +72,7 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
 
   if (isPending) {
     // TODO: 로딩 개선
-    return (
-      <div className="w-full p-4">
-        <span>Loading...</span>
-      </div>
-    );
+    return <CollectionLoading />;
   }
 
   if (isError) {

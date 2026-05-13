@@ -54,6 +54,10 @@ export async function addToCart(
   sessionId?: string,
   userId?: string,
 ): Promise<AddToCartResult> {
+  if (!sessionId && !userId) {
+    throw new Error(ERROR_MESSAGES.UNKNOWN_ERROR);
+  }
+
   const whereClause: {
     variantId: string;
     userId?: string;
@@ -115,6 +119,10 @@ export async function updateCartItem(
   sessionId?: string,
   userId?: string,
 ): Promise<UpdateCartItemResult> {
+  if (!sessionId && !userId) {
+    throw new Error(ERROR_MESSAGES.UNKNOWN_ERROR);
+  }
+
   const item = await prisma.cart.findFirst({
     where: {
       id,
@@ -150,6 +158,10 @@ export async function removeFromCart(
   sessionId?: string,
   userId?: string,
 ): Promise<RemoveFromCartResult> {
+  if (!sessionId && !userId) {
+    throw new Error(ERROR_MESSAGES.UNKNOWN_ERROR);
+  }
+
   const item = await prisma.cart.findFirst({
     where: {
       id,

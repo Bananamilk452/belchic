@@ -116,7 +116,7 @@ export function Cart() {
   return (
     <SuspenseQuery {...cartQueryOptions()}>
       {({ data }) => (
-        <div className="mx-auto max-w-7xl px-[50px] py-[36px]">
+        <div className="mx-auto w-full max-w-7xl px-[50px] py-[36px]">
           <div className="flex w-full items-center justify-between">
             <h1 className="mb-6 font-serif text-[40px]">카트</h1>
 
