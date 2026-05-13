@@ -2,11 +2,16 @@ import { getSessionCookie } from "better-auth/cookies";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const sessionCookie = getSessionCookie(request);
   const { pathname } = request.nextUrl;
 
-  if (sessionCookie && ["/sign-in", "/sign-up"].includes(pathname)) {
-    return NextResponse.redirect(new URL("/", request.url));
+  try {
+    const sessionCookie = getSessionCookie(request);
+
+    if (sessionCookie && ["/sign-in", "/sign-up"].includes(pathname)) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  } catch {
+    // 쿠키 파싱 실패 시 통과
   }
 
   return NextResponse.next();
