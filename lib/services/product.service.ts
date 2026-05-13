@@ -28,7 +28,9 @@ export async function getProducts(params: GetProductsParams): Promise<GetProduct
       skip,
       take: limit,
       orderBy,
-      include: { variants: true },
+      include: {
+        variants: true,
+      },
     }),
     prisma.product.count(),
   ]);
@@ -51,16 +53,16 @@ export async function getProducts(params: GetProductsParams): Promise<GetProduct
 export async function getProductByHandle(handle: string) {
   const product = await prisma.product.findFirst({
     where: { handle },
-    include: { variants: true },
+    include: {
+      variants: true,
+    },
   });
 
   if (!product) {
     throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
   }
 
-  return {
-    product,
-  };
+  return { product };
 }
 
 export async function getRelatedProductsByHandle(params: GetRelatedProductsByHandleParams) {
@@ -81,10 +83,10 @@ export async function getRelatedProductsByHandle(params: GetRelatedProductsByHan
       OR: [{ type: product.type }, { tags: { hasSome: product.tags } }],
     },
     take: limit,
-    include: { variants: true },
+    include: {
+      variants: true,
+    },
   });
 
-  return {
-    products: relatedProducts,
-  };
+  return { products: relatedProducts };
 }
