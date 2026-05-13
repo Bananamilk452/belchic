@@ -112,7 +112,7 @@ export async function updateCartItemAction(
 ): ActionPromise<UpdateCartItemResult> {
   return withAction(async () => {
     const userId = await getUserId();
-    const sessionId = userId ? undefined : await getCartSessionId();
+    const sessionId = userId ? undefined : await getOrGenerateSessionId();
 
     const validatedParams = updateCartItemSchema.parse({
       id,
@@ -133,7 +133,7 @@ export async function updateCartItemAction(
 export async function removeFromCartAction(id: string): ActionPromise<RemoveFromCartResult> {
   return withAction(async () => {
     const userId = await getUserId();
-    const sessionId = userId ? undefined : await getCartSessionId();
+    const sessionId = userId ? undefined : await getOrGenerateSessionId();
 
     const validatedParams = removeFromCartSchema.parse({
       id,
