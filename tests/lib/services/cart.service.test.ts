@@ -82,10 +82,15 @@ describe("Cart Service", () => {
     it("product가 null인 항목은 필터링한다", async () => {
       const itemsWithNullProduct: CartItemWithNullableProduct[] = [
         createMockCartItem({ id: "cart-valid" }),
-        createMockCartItem({
+        {
+          ...createMockCartItem({
           id: "cart-invalid",
-          variant: { ...mockCartItems[0].variant, product: null },
         }),
+          variant: {
+            ...mockCartItems[0].variant,
+            product: null,
+          },
+        },
       ];
       mockPrisma.cart.findMany.mockResolvedValue(itemsWithNullProduct);
 
@@ -161,9 +166,13 @@ describe("Cart Service", () => {
 
     it("product가 null이면 에러를 발생시킨다", async () => {
       mockPrisma.cart.findFirst.mockResolvedValue(null);
-      const itemWithNullProduct: CartItemWithNullableProduct = createMockCartItem({
-        variant: { ...mockCartItems[0].variant, product: null },
-      });
+      const itemWithNullProduct: CartItemWithNullableProduct = {
+        ...createMockCartItem(),
+        variant: {
+          ...mockCartItems[0].variant,
+          product: null,
+        },
+      };
       mockPrisma.cart.create.mockResolvedValue(itemWithNullProduct);
 
       await expect(addToCart("variant-1", 1, SESSION_ID)).rejects.toThrow(
