@@ -8,7 +8,6 @@ import { Button } from "../ui/button";
 import { Field, FieldError } from "../ui/field";
 import { Input } from "../ui/input";
 import { authClient } from "@/lib/auth-client";
-import { ERROR_MESSAGES } from "@/lib/error-messages";
 import { signInSchema, type SignInFormValues } from "@/lib/schemas/auth.schema";
 
 export function SignInForm() {
