@@ -202,11 +202,6 @@ describe("Cart Service", () => {
     });
 
     it("다른 유저의 카트 항목을 수정하려고 하면 에러를 발생시킨다", async () => {
-      const otherUserItem = createMockCartItem({
-        id: "other-user-cart",
-        userId: "other-user-id",
-        sessionId: null,
-      });
       mockPrisma.cart.findFirst.mockResolvedValue(null);
 
       await expect(updateCartItem("other-user-cart", 5, undefined, USER_ID)).rejects.toThrow();
@@ -259,11 +254,6 @@ describe("Cart Service", () => {
     });
 
     it("다른 유저의 카트 항목을 삭제하려고 하면 에러를 발생시킨다", async () => {
-      const otherUserItem = createMockCartItem({
-        id: "other-user-cart",
-        userId: "other-user-id",
-        sessionId: null,
-      });
       mockPrisma.cart.findFirst.mockResolvedValue(null);
 
       await expect(removeFromCart("other-user-cart", undefined, USER_ID)).rejects.toThrow();
