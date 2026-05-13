@@ -37,7 +37,7 @@ export function SignUpForm() {
       return;
     }
 
-    router.push("/sign-in");
+    router.push("/");
   };
 
   return (

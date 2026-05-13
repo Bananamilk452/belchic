@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <div className="w-full">
       <Link
         href={`/products/${product.handle}`}
-        className="group relative block min-h-[400px] w-full overflow-hidden bg-gray-200"
+        className="group relative block min-h-[300px] w-full overflow-hidden bg-gray-200"
       >
         <img
           className="h-full w-full max-w-full object-cover opacity-100 transition-opacity duration-300 group-hover:opacity-50"
