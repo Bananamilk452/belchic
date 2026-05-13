@@ -131,7 +131,8 @@ export function ProductInfo() {
   const addToCartMutation = useMutation({
     mutationFn: async () => {
       const result = await addToCartAction(selectedVariant.id, quantity);
-      return result;
+      if (!result.success) throw new Error(result.error);
+      return result.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });

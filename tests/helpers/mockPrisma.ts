@@ -9,10 +9,16 @@ export function createMockPrisma() {
       update: vi.fn(),
       delete: vi.fn(),
     },
+    favorite: {
+      findFirst: vi.fn(),
+      create: vi.fn(),
+      delete: vi.fn(),
+    },
     product: {
       findMany: vi.fn(),
       findFirst: vi.fn(),
       count: vi.fn(),
+      findUnique: vi.fn(),
     },
     variant: {
       findMany: vi.fn(),

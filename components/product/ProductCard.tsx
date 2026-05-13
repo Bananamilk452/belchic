@@ -1,14 +1,21 @@
+"use client";
+
 import { HeartIcon } from "lucide-react";
 import Link from "next/link";
 
-import { GetProductsResult } from "@/lib/models/product.model";
-import { parsePrice } from "@/lib/utils";
+import { useFavorite } from "@/hooks/useFavorite";
+import { Product, Variant } from "@/lib/generated/prisma/client";
+import { cn, parsePrice } from "@/lib/utils";
+
+type ProductItem = Product & { variants: Variant[] };
 
 type ProductCardProps = {
-  product: GetProductsResult["products"][number];
+  product: ProductItem;
 };
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { isFavorite, toggleFavorite } = useFavorite(product);
+
   return (
     <div className="w-full">
       <Link
@@ -25,7 +32,7 @@ export function ProductCard({ product }: ProductCardProps) {
           src={product.variants[0]?.featuredImage ?? product.images?.[1] ?? product.featuredImage}
           alt={product.title}
         />
-        <LikeButton />
+        <LikeButton isFavorited={isFavorite} onToggle={toggleFavorite} />
       </Link>
       <div className="py-[17px]">
         <Link
@@ -43,11 +50,20 @@ export function ProductCard({ product }: ProductCardProps) {
   );
 }
 
-function LikeButton() {
+function LikeButton({
+  isFavorited,
+  onToggle,
+}: {
+  isFavorited: boolean;
+  onToggle: (e: React.MouseEvent) => void;
+}) {
   return (
-    // Link 안의 Button이라 div로 만듬
-    <div className="absolute top-2 right-2 flex size-12 cursor-pointer items-center justify-center rounded-full bg-white p-2.5 opacity-90 shadow-lg transition-all hover:scale-105 hover:opacity-100">
-      <HeartIcon className="size-5" />
+    // eslint-disable-next-line
+    <div
+      onClick={onToggle}
+      className="absolute top-2 right-2 flex size-12 cursor-pointer items-center justify-center rounded-full bg-white p-2.5 opacity-90 shadow-lg transition-all hover:scale-105 hover:opacity-100"
+    >
+      <HeartIcon className={cn("size-5", isFavorited ? "fill-red-500 text-red-500" : "")} />
     </div>
   );
 }

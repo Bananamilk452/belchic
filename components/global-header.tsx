@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "./ui/button";
@@ -244,6 +244,8 @@ function MobileNavSheet({
 }
 
 export function GlobalHeader() {
+  const router = useRouter();
+
   return (
     <div className="flex w-full flex-col items-center justify-center border-b border-border bg-white">
       <aside className="w-full bg-black py-2 text-center text-xs text-white">
@@ -274,10 +276,10 @@ export function GlobalHeader() {
           <Button variant="ghost" className="hidden md:flex" size="icon-lg">
             <AccountIcon className="size-5" />
           </Button>
-          <Button variant="ghost" size="icon-lg">
+          <Button variant="ghost" size="icon-lg" onClick={() => router.push("/favorite")}>
             <WishlistIcon className="size-5" />
           </Button>
-          <Button variant="ghost" size="icon-lg">
+          <Button variant="ghost" size="icon-lg" onClick={() => router.push("/cart")}>
             <CartIcon className="size-5" />
           </Button>
         </div>

@@ -8,7 +8,6 @@ import { Button } from "../ui/button";
 import { Field, FieldError } from "../ui/field";
 import { Input } from "../ui/input";
 import { authClient } from "@/lib/auth-client";
-import { ERROR_MESSAGES } from "@/lib/error-messages";
 import { signInSchema, type SignInFormValues } from "@/lib/schemas/auth.schema";
 
 export function SignInForm() {
@@ -31,11 +30,7 @@ export function SignInForm() {
     });
 
     if (error) {
-      if (error.status === 400) {
-        form.setError("root", { message: ERROR_MESSAGES.EMAIL_OR_PASSWORD_INVALID });
-      } else {
-        form.setError("root", { message: ERROR_MESSAGES.FAILED_TO_SIGN_IN });
-      }
+      form.setError("root", { message: error.message });
       return;
     }
 

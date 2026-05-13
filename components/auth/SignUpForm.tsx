@@ -8,7 +8,6 @@ import { Button } from "../ui/button";
 import { Field, FieldError } from "../ui/field";
 import { Input } from "../ui/input";
 import { authClient } from "@/lib/auth-client";
-import { ERROR_MESSAGES } from "@/lib/error-messages";
 import { signUpSchema, type SignUpFormValues } from "@/lib/schemas/auth.schema";
 
 export function SignUpForm() {
@@ -34,11 +33,7 @@ export function SignUpForm() {
     });
 
     if (error) {
-      if (error.status === 409) {
-        form.setError("root", { message: ERROR_MESSAGES.EMAIL_ALREADY_IN_USE });
-      } else {
-        form.setError("root", { message: ERROR_MESSAGES.FAILED_TO_SIGN_UP });
-      }
+      form.setError("root", { message: error.message });
       return;
     }
 

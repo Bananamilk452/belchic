@@ -13,4 +13,6 @@ export const ERROR_MESSAGES = {
   FAILED_TO_SIGN_UP: "계정 생성에 실패했습니다",
   EMAIL_OR_PASSWORD_INVALID: "이메일 또는 비밀번호가 올바르지 않습니다",
   FAILED_TO_SIGN_IN: "로그인에 실패했습니다",
+  USER_ID_REQUIRED: "사용자 ID가 필요합니다",
+  PRODUCT_ID_REQUIRED: "제품 ID가 필요합니다",
 };
