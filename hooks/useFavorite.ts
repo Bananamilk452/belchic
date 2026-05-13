@@ -26,7 +26,11 @@ export function useFavorite(product: ProductItem) {
   const isFavorite = favoriteData?.items.some((item) => item.id === product.id) ?? false;
 
   const addToFavoriteMutation = useMutation({
-    mutationFn: addToFavoriteAction,
+    mutationFn: async (productId: string) => {
+      const result = await addToFavoriteAction(productId);
+      if (!result.success) throw new Error(result.error);
+      return result.data;
+    },
     onMutate: async (productId) => {
       await queryClient.cancelQueries({ queryKey: ["favorite"] });
 
@@ -53,7 +57,11 @@ export function useFavorite(product: ProductItem) {
   });
 
   const removeFromFavoriteMutation = useMutation({
-    mutationFn: removeFromFavoriteAction,
+    mutationFn: async (productId: string) => {
+      const result = await removeFromFavoriteAction(productId);
+      if (!result.success) throw new Error(result.error);
+      return result.data;
+    },
     onMutate: async (productId) => {
       await queryClient.cancelQueries({ queryKey: ["favorite"] });
 

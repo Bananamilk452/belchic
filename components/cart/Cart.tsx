@@ -19,7 +19,8 @@ export function Cart() {
   const updateQuantityMutation = useMutation({
     mutationFn: async ({ id, quantity }: { id: string; quantity: number }) => {
       const result = await updateCartItemAction(id, quantity);
-      return result;
+      if (!result.success) throw new Error(result.error);
+      return result.data;
     },
     onMutate: async ({ id, quantity }) => {
       setLoadingItemId(id);
@@ -62,7 +63,8 @@ export function Cart() {
   const removeItemMutation = useMutation({
     mutationFn: async (id: string) => {
       const result = await removeFromCartAction(id);
-      return result;
+      if (!result.success) throw new Error(result.error);
+      return result.data;
     },
     onMutate: async (id) => {
       setLoadingItemId(id);
