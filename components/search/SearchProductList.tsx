@@ -9,9 +9,9 @@ import { ProductCard } from "@/components/product/ProductCard";
 import { ProductListPagination } from "@/components/shared/ProductListPagination";
 import { SORT_VALUES } from "@/lib/models/product.model";
 import { productsQueryOptions } from "@/lib/queries/product.query";
-import { SearchFormValues } from "@/lib/schemas/search.schema";
 
 import type { GetProductsParams } from "@/lib/models/product.model";
+import type { SearchFormValues } from "@/lib/schemas/search.schema";
 
 export function SearchProductList({ defaultOptions }: { defaultOptions: GetProductsParams }) {
   const router = useRouter();
@@ -61,7 +61,7 @@ export function SearchProductList({ defaultOptions }: { defaultOptions: GetProdu
     <div className="flex w-full flex-col items-center py-10">
       <h2 className="py-4 font-serif text-2xl">검색 결과</h2>
 
-      <div className="mt-[30px] mb-[35px]">
+      <div className="mt-[30px] mb-[35px] flex w-full justify-center px-12">
         <SearchBar onSubmit={handleSubmit} defaultValue={defaultOptions.q} />
       </div>
 

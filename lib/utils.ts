@@ -57,7 +57,7 @@ export function getPaginationItems(current: number, total: number): (number | st
 }
 
 export function buildHref(targetPage: number, sort: string, defaultSort?: string) {
-  const params = new URLSearchParams();
+  const params = new URLSearchParams(location.search);
   params.set("page", String(targetPage));
   if (sort !== defaultSort) {
     params.set("sort", sort);
