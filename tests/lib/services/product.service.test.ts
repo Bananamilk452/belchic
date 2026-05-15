@@ -36,8 +36,11 @@ describe("Product Service", () => {
         take: 10,
         orderBy: { createdAt: "desc" },
         include: { variants: true },
+        where: {},
       });
-      expect(mockPrisma.product.count).toHaveBeenCalledWith();
+      expect(mockPrisma.product.count).toHaveBeenCalledWith({
+        where: {},
+      });
       expect(result.products).toHaveLength(2);
       expect(result.pagination.page).toBe(1);
       expect(result.pagination.limit).toBe(10);

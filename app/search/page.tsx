@@ -14,17 +14,13 @@ export default async function SearchPage({
 }) {
   const { q: queryParam, page: pageParam, sort: sortParam } = await searchParams;
 
+  const sortParsed = sortParam ? ProductSortSchema.safeParse(sortParam) : undefined;
+
   const defaultOptions: GetProductsParams = {
     page: 1,
     limit: 32,
-    sort: "date_desc",
+    sort: sortParsed?.success ? sortParsed.data : "date_desc",
     ...(pageParam ? { page: Number(pageParam) || 1 } : {}),
-    ...(sortParam
-      ? (() => {
-          const parsed = ProductSortSchema.safeParse(sortParam);
-          return parsed.success ? { sort: parsed.data } : {};
-        })()
-      : {}),
     ...(queryParam ? { q: queryParam } : {}),
   };
 

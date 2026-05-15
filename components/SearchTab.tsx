@@ -27,7 +27,7 @@ export function SearchTab({ open, onOpenChange }: SearchTabProps) {
 
   return (
     open && (
-      <Dimmer>
+      <Dimmer onClick={handleClose}>
         <div className="relative flex h-[65px] animate-slide-in-bottom items-center justify-center bg-white px-[60px] md:min-h-[180px]">
           <button className="cursor-pointer" onClick={handleClose}>
             <XIcon className="absolute top-1/2 right-3 -translate-y-1/2 md:top-3 md:right-3 md:translate-0" />
