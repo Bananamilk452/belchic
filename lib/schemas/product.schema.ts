@@ -18,6 +18,7 @@ export const GetProductsParamsSchema = z.object({
   page: z.number().int().min(1).optional(),
   limit: z.number().int().min(1).optional(),
   sort: ProductSortSchema.optional(),
+  q: z.string().optional(),
 });
 
 export const GetProductByHandleParamsSchema = z.object({

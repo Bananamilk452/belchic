@@ -15,4 +15,5 @@ export const ERROR_MESSAGES = {
   FAILED_TO_SIGN_IN: "로그인에 실패했습니다",
   USER_ID_REQUIRED: "사용자 ID가 필요합니다",
   PRODUCT_ID_REQUIRED: "제품 ID가 필요합니다",
+  SEARCH_QUERY_REQUIRED: "검색어를 입력해주세요",
 };
