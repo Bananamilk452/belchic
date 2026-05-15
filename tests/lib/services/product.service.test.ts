@@ -173,6 +173,75 @@ describe("Product Service", () => {
 
       expect(result.pagination.totalPages).toBe(4);
     });
+
+    it("q 파라미터로 제목 검색을 한다", async () => {
+      mockPrisma.product.findMany.mockResolvedValue([mockProduct]);
+      mockPrisma.product.count.mockResolvedValue(1);
+
+      await getProducts({ q: "테스트" });
+
+      expect(mockPrisma.product.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            OR: [
+              { title: { contains: "테스트", mode: "insensitive" } },
+              { description: { contains: "테스트", mode: "insensitive" } },
+            ],
+          },
+        }),
+      );
+    });
+
+    it("q 파라미터로 설명 검색을 한다", async () => {
+      mockPrisma.product.findMany.mockResolvedValue([mockProduct]);
+      mockPrisma.product.count.mockResolvedValue(1);
+
+      await getProducts({ q: "설명" });
+
+      expect(mockPrisma.product.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            OR: [
+              { title: { contains: "설명", mode: "insensitive" } },
+              { description: { contains: "설명", mode: "insensitive" } },
+            ],
+          },
+        }),
+      );
+    });
+
+    it("q와 sort를 함께 전달할 수 있다", async () => {
+      mockPrisma.product.findMany.mockResolvedValue([]);
+      mockPrisma.product.count.mockResolvedValue(0);
+
+      await getProducts({ q: "테스트", sort: "price_asc" });
+
+      expect(mockPrisma.product.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: {
+            OR: [
+              { title: { contains: "테스트", mode: "insensitive" } },
+              { description: { contains: "테스트", mode: "insensitive" } },
+            ],
+          },
+          orderBy: { price: "asc" },
+        }),
+      );
+    });
+
+    it("q와 pagination을 함께 전달할 수 있다", async () => {
+      mockPrisma.product.findMany.mockResolvedValue([]);
+      mockPrisma.product.count.mockResolvedValue(5);
+
+      await getProducts({ q: "테스트", page: 2, limit: 2 });
+
+      expect(mockPrisma.product.findMany).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skip: 2,
+          take: 2,
+        }),
+      );
+    });
   });
 
   describe("getProductByHandle", () => {
