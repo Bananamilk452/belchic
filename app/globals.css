@@ -5,6 +5,18 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  @keyframes slide-in-bottom {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  --animate-slide-in-bottom: slide-in-bottom 0.2s ease-out;
 }
 
 @theme inline {

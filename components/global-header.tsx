@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { SearchTab } from "./SearchTab";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -245,6 +246,7 @@ function MobileNavSheet({
 
 export function GlobalHeader() {
   const router = useRouter();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
     <div className="flex w-full flex-col items-center justify-center border-b border-border bg-white">
@@ -270,7 +272,8 @@ export function GlobalHeader() {
         </div>
         <DesktopNavMenu menus={NAV_MENU} />
         <div className="flex items-center justify-center">
-          <Button variant="ghost" size="icon-lg">
+          <SearchTab open={isSearchOpen} onOpenChange={setIsSearchOpen} />
+          <Button variant="ghost" size="icon-lg" onClick={() => setIsSearchOpen(true)}>
             <SearchIcon className="size-5" />
           </Button>
           <Button variant="ghost" className="hidden md:flex" size="icon-lg">
