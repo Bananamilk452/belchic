@@ -23,8 +23,18 @@ export async function getProducts(params: GetProductsParams): Promise<GetProduct
   const skip = (page - 1) * limit;
   const orderBy = params.sort ? sortOrderMap[params.sort] : { createdAt: "desc" as const };
 
+  const where = params.q
+    ? {
+        OR: [
+          { title: { contains: params.q, mode: "insensitive" as const } },
+          { description: { contains: params.q, mode: "insensitive" as const } },
+        ],
+      }
+    : {};
+
   const [products, total] = await Promise.all([
     prisma.product.findMany({
+      where,
       skip,
       take: limit,
       orderBy,
@@ -32,7 +42,7 @@ export async function getProducts(params: GetProductsParams): Promise<GetProduct
         variants: true,
       },
     }),
-    prisma.product.count(),
+    prisma.product.count({ where }),
   ]);
 
   const totalPages = Math.ceil(total / limit);
