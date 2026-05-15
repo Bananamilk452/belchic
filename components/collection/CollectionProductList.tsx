@@ -17,44 +17,10 @@ import {
 } from "@/components/ui/pagination";
 import { productsQueryOptions } from "@/lib/queries/product.query";
 import { ProductSortSchema } from "@/lib/schemas/product.schema";
+import { SORT_OPTIONS, SORT_VALUES } from "@/lib/types/search.types";
+import { buildHref, getPaginationItems } from "@/lib/utils";
 
 import type { GetProductsParams } from "@/lib/models/product.model";
-
-const SORT_OPTIONS = [
-  { value: "date_desc", label: "최신순" },
-  { value: "date_asc", label: "오래된순" },
-  { value: "price_asc", label: "가격 낮은 순" },
-  { value: "price_desc", label: "가격 높은 순" },
-  { value: "name_asc", label: "알파벳 순, A-Z" },
-  { value: "name_desc", label: "알파벳 순, Z-A" },
-] as const;
-
-const SORT_VALUES = SORT_OPTIONS.map((o) => o.value);
-
-function getPaginationItems(current: number, total: number): (number | string)[] {
-  if (total <= 7) {
-    return Array.from({ length: total }, (_, i) => i + 1);
-  }
-
-  if (current <= 3) {
-    return [1, 2, 3, 4, "ellipsis", total];
-  }
-
-  if (current >= total - 2) {
-    return [1, "ellipsis", total - 3, total - 2, total - 1, total];
-  }
-
-  return [1, "ellipsis", current - 1, current, current + 1, "ellipsis", total];
-}
-
-function buildHref(targetPage: number, sort: string, defaultSort?: string) {
-  const params = new URLSearchParams();
-  params.set("page", String(targetPage));
-  if (sort !== defaultSort) {
-    params.set("sort", sort);
-  }
-  return `?${params.toString()}`;
-}
 
 export function CollectionProductList({ defaultOptions }: { defaultOptions: GetProductsParams }) {
   const [page, setPage] = useQueryState(
@@ -71,7 +37,6 @@ export function CollectionProductList({ defaultOptions }: { defaultOptions: GetP
   );
 
   if (isPending) {
-    // TODO: 로딩 개선
     return <CollectionLoading />;
   }
 
