@@ -10,7 +10,7 @@ export default function CollectionLoading() {
       <div className="grid w-full max-w-6xl grid-cols-2 items-start justify-center gap-4 px-4 md:grid-cols-4">
         {[...Array(12)].map((_, index) => (
           <div key={index} className="col-span-1 w-full">
-            <Skeleton className="h-[300px] w-full" />
+            <Skeleton className="aspect-265/400 w-full" />
             <div className="py-[17px]">
               <Skeleton className="h-[14px] w-[80%]" />
               <Skeleton className="mt-1 h-[16px] w-[40%]" />

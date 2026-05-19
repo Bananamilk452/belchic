@@ -57,7 +57,7 @@ export function getPaginationItems(current: number, total: number): (number | st
 }
 
 export function buildHref(
-  searchParams: string,
+  searchParams: URLSearchParams,
   targetPage: number,
   sort: string,
   defaultSort?: string,

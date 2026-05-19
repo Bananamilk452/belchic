@@ -72,7 +72,7 @@ export function ProductListPagination({
           {pagination.hasPrev && (
             <PaginationItem>
               <PaginationPrevious
-                href={buildHref(searchParams.toString(), page - 1, sort, defaultSort)}
+                href={buildHref(searchParams, page - 1, sort, defaultSort)}
                 onClick={(e) => {
                   e.preventDefault();
                   onPageChange(page - 1);
@@ -86,7 +86,7 @@ export function ProductListPagination({
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  href={buildHref(searchParams.toString(), item as number, sort, defaultSort)}
+                  href={buildHref(searchParams, item as number, sort, defaultSort)}
                   isActive={item === page}
                   onClick={(e) => {
                     e.preventDefault();
@@ -101,7 +101,7 @@ export function ProductListPagination({
           {pagination.hasNext && (
             <PaginationItem>
               <PaginationNext
-                href={buildHref(searchParams.toString(), page + 1, sort, defaultSort)}
+                href={buildHref(searchParams, page + 1, sort, defaultSort)}
                 onClick={(e) => {
                   e.preventDefault();
                   onPageChange(page + 1);
