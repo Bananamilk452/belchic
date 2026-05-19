@@ -54,6 +54,34 @@ const NAV_MENU: Array<NavMenu> = [
     label: "새로 들어온 상품",
     path: "/collections/new",
   },
+  {
+    label: "Belchic",
+    path: "/collections/belchic",
+  },
+  {
+    label: "👑랭킹👑",
+    path: "/collections/best",
+  },
+  {
+    label: "지뢰계",
+    path: "/collections/jirai",
+  },
+  {
+    label: "로리타",
+    path: "/collections/lolita",
+  },
+  {
+    label: "차이나",
+    path: "/collections/china",
+  },
+  {
+    label: "고딕",
+    path: "/collections/gothic",
+  },
+  {
+    label: "서브컬쳐",
+    path: "/collections/subculture",
+  },
   // {
   //   label: "드롭다운 테스트",
   //   submenu: [
@@ -136,7 +164,7 @@ function DesktopNavMenu({ menus }: { menus: Array<NavMenu> }) {
     );
 
   return (
-    <div className="hidden flex-1 flex-wrap md:flex">
+    <div className="hidden flex-1 flex-wrap gap-3 md:flex">
       {menus.map((item, idx) =>
         "path" in item ? (
           <Link key={idx} className="group p-2" href={item.path}>

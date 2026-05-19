@@ -9,8 +9,14 @@ import { ProductSortSchema } from "@/lib/schemas/product.schema";
 import type { GetProductsParams } from "@/lib/models/product.model";
 
 const COLLECTION_DEFAULT_OPTIONS: Record<string, Partial<GetProductsParams>> = {
-  belchic: { sort: "date_desc" },
+  belchic: { sort: "date_desc", tag: "Belchic" },
   new: { sort: "date_desc" },
+  best: { sort: "date_desc", tag: "best" },
+  jirai: { sort: "date_desc", tag: "地雷系" },
+  lolita: { sort: "date_desc", tag: "ロリータ" },
+  china: { sort: "date_desc", tag: "チャイナ" },
+  gothic: { sort: "date_desc", tag: "ゴシック" },
+  subculture: { sort: "date_desc", tag: "サブカル" },
 };
 
 export default async function CollectionPage({
