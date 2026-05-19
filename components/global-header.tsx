@@ -143,7 +143,7 @@ function DesktopNavMenu({ menus }: { menus: Array<NavMenu> }) {
   const generateDropdownContent = (submenu: Array<NavMenu>) =>
     groupSubMenu(submenu).map((subItem, idx) =>
       Array.isArray(subItem) ? (
-        <DropdownMenuGroup key={idx} className="">
+        <DropdownMenuGroup key={idx}>
           {subItem.map(
             (submenuItem) =>
               "path" in submenuItem && (
