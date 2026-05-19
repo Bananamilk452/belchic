@@ -15,6 +15,7 @@ import { ProductSortSchema } from "@/lib/schemas/product.schema";
 import { buildHref, getPaginationItems } from "@/lib/utils";
 
 import type { GetProductsResult } from "@/lib/models/product.model";
+import { useSearchParams } from "next/navigation";
 
 type ProductListPaginationProps = {
   sort: string;
@@ -37,7 +38,10 @@ export function ProductListPagination({
   total,
   children,
 }: ProductListPaginationProps) {
+  const searchParams = useSearchParams();
+
   return (
+
     <>
       <div className="mb-4 flex w-full max-w-6xl items-center justify-end px-4">
         <span className="h-7.5 py-1 text-sm text-muted-foreground">정렬 기준 : </span>
@@ -68,7 +72,7 @@ export function ProductListPagination({
           {pagination.hasPrev && (
             <PaginationItem>
               <PaginationPrevious
-                href={buildHref(page - 1, sort, defaultSort)}
+                href={buildHref(searchParams.toString(), page - 1, sort, defaultSort)}
                 onClick={(e) => {
                   e.preventDefault();
                   onPageChange(page - 1);
@@ -82,7 +86,7 @@ export function ProductListPagination({
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  href={buildHref(item as number, sort, defaultSort)}
+                  href={buildHref(searchParams.toString(), item as number, sort, defaultSort)}
                   isActive={item === page}
                   onClick={(e) => {
                     e.preventDefault();
@@ -97,7 +101,7 @@ export function ProductListPagination({
           {pagination.hasNext && (
             <PaginationItem>
               <PaginationNext
-                href={buildHref(page + 1, sort, defaultSort)}
+                href={buildHref(searchParams.toString(), page + 1, sort, defaultSort)}
                 onClick={(e) => {
                   e.preventDefault();
                   onPageChange(page + 1);

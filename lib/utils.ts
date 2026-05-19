@@ -56,8 +56,13 @@ export function getPaginationItems(current: number, total: number): (number | st
   return [1, "ellipsis", current - 1, current, current + 1, "ellipsis", total];
 }
 
-export function buildHref(targetPage: number, sort: string, defaultSort?: string) {
-  const params = new URLSearchParams(location.search);
+export function buildHref(
+  searchParams: string,
+  targetPage: number,
+  sort: string,
+  defaultSort?: string,
+) {
+  const params = new URLSearchParams(searchParams);
   params.set("page", String(targetPage));
   if (sort !== defaultSort) {
     params.set("sort", sort);
