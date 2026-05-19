@@ -1,5 +1,7 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import {
   Pagination,
@@ -15,7 +17,6 @@ import { ProductSortSchema } from "@/lib/schemas/product.schema";
 import { buildHref, getPaginationItems } from "@/lib/utils";
 
 import type { GetProductsResult } from "@/lib/models/product.model";
-import { useSearchParams } from "next/navigation";
 
 type ProductListPaginationProps = {
   sort: string;
@@ -41,7 +42,6 @@ export function ProductListPagination({
   const searchParams = useSearchParams();
 
   return (
-
     <>
       <div className="mb-4 flex w-full max-w-6xl items-center justify-end px-4">
         <span className="h-7.5 py-1 text-sm text-muted-foreground">정렬 기준 : </span>
