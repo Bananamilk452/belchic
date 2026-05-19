@@ -1,10 +1,9 @@
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Outfit, Noto_Serif_KR } from "next/font/google";
-
-import "./globals.css";
 import localFont from "next/font/local";
 
 import Providers from "./providers";
+import { GlobalFooter } from "@/components/global-footer";
 import { GlobalHeader } from "@/components/global-header";
 import { Toaster } from "@/components/ui/sonner";
 import { getQueryClient } from "@/hooks/getQueryClient";
@@ -12,6 +11,7 @@ import { favoriteQueryOptions } from "@/lib/queries/favorite.query";
 import { cn } from "@/lib/utils";
 
 import type { Metadata } from "next";
+import "./globals.css";
 
 const pretendard = localFont({
   src: "./PretendardVariable.woff2",
@@ -60,6 +60,7 @@ export default async function RootLayout({
           <HydrationBoundary state={dehydrate(queryClient)}>
             <GlobalHeader />
             {children}
+            <GlobalFooter />
             <Toaster />
           </HydrationBoundary>
         </Providers>
