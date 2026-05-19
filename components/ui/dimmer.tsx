@@ -5,22 +5,9 @@ type DimmerProps = {
 
 export function Dimmer({ children, onClick }: DimmerProps) {
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-tabindex
-    <div
-      className="fixed inset-0 z-50 bg-black/50"
-      tabIndex={0}
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Escape") {
-          onClick?.();
-        }
-      }}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => e.stopPropagation()}
-        role="presentation"
-      >
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <div className="fixed inset-0 z-50 bg-black/50" onClick={onClick} role="presentation">
+      <div onClick={(e) => e.stopPropagation()} role="presentation">
         {children}
       </div>
     </div>

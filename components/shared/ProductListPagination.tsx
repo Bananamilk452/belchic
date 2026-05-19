@@ -1,5 +1,7 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import {
   Pagination,
@@ -37,6 +39,8 @@ export function ProductListPagination({
   total,
   children,
 }: ProductListPaginationProps) {
+  const searchParams = useSearchParams();
+
   return (
     <>
       <div className="mb-4 flex w-full max-w-6xl items-center justify-end px-4">
@@ -68,7 +72,7 @@ export function ProductListPagination({
           {pagination.hasPrev && (
             <PaginationItem>
               <PaginationPrevious
-                href={buildHref(page - 1, sort, defaultSort)}
+                href={buildHref(searchParams, page - 1, sort, defaultSort)}
                 onClick={(e) => {
                   e.preventDefault();
                   onPageChange(page - 1);
@@ -82,7 +86,7 @@ export function ProductListPagination({
                 <PaginationEllipsis />
               ) : (
                 <PaginationLink
-                  href={buildHref(item as number, sort, defaultSort)}
+                  href={buildHref(searchParams, item as number, sort, defaultSort)}
                   isActive={item === page}
                   onClick={(e) => {
                     e.preventDefault();
@@ -97,7 +101,7 @@ export function ProductListPagination({
           {pagination.hasNext && (
             <PaginationItem>
               <PaginationNext
-                href={buildHref(page + 1, sort, defaultSort)}
+                href={buildHref(searchParams, page + 1, sort, defaultSort)}
                 onClick={(e) => {
                   e.preventDefault();
                   onPageChange(page + 1);

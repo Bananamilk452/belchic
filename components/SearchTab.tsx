@@ -2,6 +2,7 @@
 
 import { XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useCallback, useEffect } from "react";
 
 import { SearchBar } from "./SearchBar";
 import { Dimmer } from "./ui/dimmer";
@@ -16,9 +17,22 @@ type SearchTabProps = {
 export function SearchTab({ open, onOpenChange }: SearchTabProps) {
   const router = useRouter();
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     onOpenChange(false);
-  };
+  }, [onOpenChange]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, handleClose]);
 
   const handleSubmit = (values: SearchFormValues) => {
     router.push(`/search?q=${encodeURIComponent(values.query)}`);

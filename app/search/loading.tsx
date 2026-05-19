@@ -1,8 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function CollectionLoading() {
+export default function SearchLoading() {
   return (
     <div className="flex w-full flex-col items-center py-10">
+      <h2 className="py-4 font-serif text-2xl">검색 결과</h2>
+
+      <div className="mt-[30px] mb-[35px] flex w-full justify-center px-12">
+        <Skeleton className="h-[45px] w-[768px]" />
+      </div>
+
       <div className="mb-4 flex w-full max-w-6xl items-center justify-end gap-2 px-4">
         <Skeleton className="h-[30px] w-[100px]" />
         <Skeleton className="h-[30px] w-[120px]" />
